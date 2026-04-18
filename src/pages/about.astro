@@ -1,0 +1,152 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import StatsRow from "@/components/sections/StatsRow.astro";
+import ProcessGrid from "@/components/sections/ProcessGrid.astro";
+import TestimonialSection from "@/components/sections/TestimonialSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Container from "@/components/ui/Container.astro";
+import { siteConfig } from "@/config/site";
+import { aboutContent } from "@/config/about";
+import { aboutStats } from "@/config/stats";
+import { imageManifest } from "@/config/images";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+const aboutHeading = `About ${siteConfig.name}`;
+
+const meta = generatePageMetadata({
+  title: aboutHeading,
+  description:
+    "Learn about our story, values, and the experience that drives our commitment to quality. Over 15 years of local service.",
+  path: "/about",
+});
+
+const heroImg = imageManifest["about-hero"];
+const publicDir = fileURLToPath(new URL("../../public", import.meta.url));
+const heroPreload =
+  heroImg && existsSync(publicDir + heroImg.src) ? heroImg.src : undefined;
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: aboutHeading },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: aboutHeading, href: "/about" },
+]);
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+  preloadImage={heroPreload}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  {/* Hero */}
+  <PageHero
+    heading={aboutHeading}
+    subtitle={aboutContent.hero.subtitle}
+    imageKey="about-hero"
+    breadcrumbs={breadcrumbs}
+    primaryCta={{ label: "Get a Quote", href: "/contact" }}
+    secondaryCta={{ label: "Call (555) 123-4567", href: "tel:+15551234567" }}
+  />
+
+  {/* Story Section */}
+  <SplitSection
+    imageKey={aboutContent.story.image}
+    imagePosition="left"
+    imageAspect="3/4"
+  >
+    <SectionHeading
+      eyebrow={aboutContent.story.eyebrow}
+      heading={aboutContent.story.heading}
+    />
+    {
+      aboutContent.story.paragraphs.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+  </SplitSection>
+
+  {/* Stats */}
+  <StatsRow stats={aboutStats} bgColor="primary" />
+
+  {/* Values */}
+  <section class="section-padding">
+    <Container>
+      <SectionHeading
+        eyebrow={aboutContent.values.eyebrow}
+        heading={aboutContent.values.heading}
+        align="center"
+      />
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          aboutContent.values.items.map((item) => (
+            <div class="rounded-2xl border border-border bg-white p-6 md:p-8">
+              <h3 class="text-lg font-bold text-foreground">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {item.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* Team */}
+  <SplitSection
+    imageKey={aboutContent.team.image}
+    imagePosition="right"
+    bgColor="surface"
+    imageAspect="4/3"
+  >
+    <SectionHeading
+      eyebrow={aboutContent.team.eyebrow}
+      heading={aboutContent.team.heading}
+    />
+    {
+      aboutContent.team.paragraphs.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+  </SplitSection>
+
+  {/* Process */}
+  <ProcessGrid
+    eyebrow="Our Process"
+    heading="How Every Project Works"
+    subtitle="A proven four-step process refined over 15 years of delivering excellence."
+    primaryCta={{ label: "Get a Quote", href: "/contact" }}
+  />
+
+  {/* Testimonials */}
+  <TestimonialSection bgColor="white" />
+
+  {/* CTA */}
+  <CTASection
+    heading="Ready to Work With Us?"
+    text="Start with a free consultation. No pressure, no obligation — just an honest conversation about your project."
+    primaryCta={{ label: "Get a Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  {/* Quote Form */}
+  <QuoteSection />
+</Layout>

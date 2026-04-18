@@ -1,0 +1,33 @@
+---
+import { ArrowRight } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import Button from "@/components/ui/Button.astro";
+---
+
+<Layout
+  title="Page Not Found"
+  description="The page you're looking for doesn't exist."
+  noindex
+>
+  <div class="flex min-h-screen items-center justify-center pt-20">
+    <Container class="text-center">
+      <p class="text-sm font-semibold uppercase tracking-widest text-primary-500">
+        404
+      </p>
+      <h1 class="mt-4 text-4xl font-bold text-foreground md:text-5xl">
+        Page Not Found
+      </h1>
+      <p class="mt-4 text-lg text-muted">
+        Sorry, we couldn&apos;t find the page you&apos;re looking for.
+      </p>
+      <div class="mt-8 flex items-center justify-center gap-4">
+        <Button href="/">
+          Back to Home
+          <ArrowRight slot="icon" className="h-5 w-5" />
+        </Button>
+        <Button href="/contact" variant="outline">Contact Us</Button>
+      </div>
+    </Container>
+  </div>
+</Layout>

@@ -1,0 +1,44 @@
+---
+import { ArrowRight, Phone } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
+import ServiceCard from "@/components/ui/ServiceCard.astro";
+import { services } from "@/config/services";
+import { businessConfig } from "@/config/business";
+import { homepageContent } from "@/config/homepage";
+
+const { services: content } = homepageContent;
+---
+
+<section class="section-padding">
+  <Container>
+    <SectionHeading
+      eyebrow={content.eyebrow}
+      heading={content.heading}
+      subtitle={content.subtitle}
+      align="center"
+    />
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => <ServiceCard service={service} />)}
+    </div>
+
+    <div
+      class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
+    >
+      <Button href="/contact" size="lg">
+        Get a Quote
+        <ArrowRight slot="icon" className="h-5 w-5" />
+      </Button>
+      <Button
+        href={`tel:${businessConfig.phoneRaw}`}
+        variant="outline"
+        size="lg"
+      >
+        {businessConfig.phone}
+        <Phone slot="icon" className="h-5 w-5" />
+      </Button>
+    </div>
+  </Container>
+</section>

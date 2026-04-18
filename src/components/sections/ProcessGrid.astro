@@ -1,0 +1,69 @@
+---
+import { ArrowRight, Phone } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
+import ProcessStepCard from "@/components/ui/ProcessStep.astro";
+import { processSteps } from "@/config/process";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtitle?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const {
+  eyebrow = "Our Process",
+  heading = "How We Work",
+  subtitle,
+  primaryCta,
+  secondaryCta,
+  bgColor = "surface",
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {processSteps.map((step) => <ProcessStepCard step={step} />)}
+    </div>
+
+    {
+      (primaryCta || secondaryCta) && (
+        <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {primaryCta && (
+            <Button href={primaryCta.href} size="lg">
+              {primaryCta.label}
+              <ArrowRight slot="icon" className="h-5 w-5" />
+            </Button>
+          )}
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="outline" size="lg">
+              {secondaryCta.label}
+              <Phone slot="icon" className="h-5 w-5" />
+            </Button>
+          )}
+        </div>
+      )
+    }
+  </Container>
+</section>

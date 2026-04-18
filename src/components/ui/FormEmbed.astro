@@ -1,0 +1,54 @@
+---
+import { FileText } from "lucide-react";
+import { businessConfig } from "@/config/business";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+  height?: string;
+}
+
+const { class: className, height } = Astro.props as Props;
+const embedUrl = businessConfig.formEmbedUrl;
+const embedHeight = height || businessConfig.formEmbedHeight;
+---
+
+{
+  embedUrl ? (
+    <iframe
+      src={embedUrl}
+      title="Request a quote"
+      class={cn("w-full border-0 rounded-xl", className)}
+      style={`height: ${embedHeight}`}
+      loading="lazy"
+    />
+  ) : (
+    <div
+      class={cn(
+        "flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-border bg-surface",
+        className,
+      )}
+      style={`height: ${embedHeight}`}
+    >
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50">
+        <FileText className="h-8 w-8 text-primary-400" />
+      </div>
+      <div class="text-center">
+        <p class="text-sm font-semibold text-foreground">
+          Form Embed Placeholder
+        </p>
+        <p class="mt-1 max-w-xs text-xs text-muted">
+          Set{" "}
+          <code class="rounded bg-surface-dark px-1 py-0.5 text-xs">
+            formEmbedUrl
+          </code>{" "}
+          in{" "}
+          <code class="rounded bg-surface-dark px-1 py-0.5 text-xs">
+            business.ts
+          </code>{" "}
+          to display your booking or quote form here.
+        </p>
+      </div>
+    </div>
+  )
+}

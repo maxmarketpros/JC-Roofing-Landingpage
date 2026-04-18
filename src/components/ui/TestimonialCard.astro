@@ -1,0 +1,60 @@
+---
+import { Star } from "lucide-react";
+import ImageSlot from "./ImageSlot.astro";
+import { cn } from "@/lib/utils";
+import type { TestimonialItem } from "@/types";
+
+interface Props {
+  testimonial: TestimonialItem;
+  class?: string;
+}
+
+const { testimonial, class: className } = Astro.props as Props;
+---
+
+<div
+  class={cn(
+    "flex flex-col rounded-2xl bg-white p-6 shadow-card md:p-8",
+    className,
+  )}
+>
+  <div class="mb-4 flex gap-1">
+    {
+      Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          className={cn(
+            "h-4 w-4",
+            i < testimonial.rating
+              ? "fill-secondary-400 text-secondary-400"
+              : "fill-border text-border",
+          )}
+        />
+      ))
+    }
+  </div>
+
+  <blockquote
+    class="flex-1 text-sm leading-relaxed text-foreground-light md:text-base"
+  >
+    &ldquo;{testimonial.quote}&rdquo;
+  </blockquote>
+
+  <div class="mt-6 flex items-center gap-3 border-t border-border pt-4">
+    {
+      testimonial.image && (
+        <div class="h-10 w-10 overflow-hidden rounded-full">
+          <ImageSlot
+            imageKey={testimonial.image}
+            aspectRatio="1/1"
+            class="h-10 w-10 rounded-full"
+            sizes="40px"
+          />
+        </div>
+      )
+    }
+    <div>
+      <p class="text-sm font-semibold text-foreground">{testimonial.name}</p>
+      <p class="text-xs text-muted">{testimonial.title}</p>
+    </div>
+  </div>
+</div>

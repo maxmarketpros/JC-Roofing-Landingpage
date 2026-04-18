@@ -1,0 +1,44 @@
+---
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import TestimonialCard from "@/components/ui/TestimonialCard.astro";
+import { testimonials } from "@/config/testimonials";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtitle?: string;
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const {
+  eyebrow = "Client Reviews",
+  heading = "What Our Clients Say",
+  subtitle,
+  bgColor = "white",
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {testimonials.map((testimonial) => <TestimonialCard testimonial={testimonial} />)}
+    </div>
+  </Container>
+</section>

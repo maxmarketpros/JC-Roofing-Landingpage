@@ -1,0 +1,102 @@
+---
+import { Phone, Mail, MapPin } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+import { footerGroups } from "@/config/navigation";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-foreground text-white">
+  <Container>
+    <div class="grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
+      {/* Brand Column */}
+      <div class="lg:col-span-1">
+        <a href="/" class="text-xl font-bold">{siteConfig.name}</a>
+        <p class="mt-4 text-sm leading-relaxed text-white/60">
+          {siteConfig.description}
+        </p>
+      </div>
+
+      {/* Nav Groups */}
+      {
+        footerGroups.map((group) => (
+          <div>
+            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40">
+              {group.title}
+            </h3>
+            <ul class="space-y-3">
+              {group.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-white/60 transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+
+      {/* Contact Column */}
+      <div>
+        <h3
+          class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40"
+        >
+          Contact
+        </h3>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href={`tel:${businessConfig.phoneRaw}`}
+              class="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+            >
+              <Phone className="h-4 w-4" />
+              {businessConfig.phone}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${businessConfig.email}`}
+              class="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+            >
+              <Mail className="h-4 w-4" />
+              {businessConfig.email}
+            </a>
+          </li>
+          <li>
+            <span class="flex items-start gap-2 text-sm text-white/60">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+              {businessConfig.address.full}
+            </span>
+          </li>
+        </ul>
+
+        {
+          businessConfig.serviceAreas.length > 0 && (
+            <div class="mt-6">
+              <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider text-white/40">
+                Service Areas
+              </h4>
+              <p class="text-sm text-white/60">
+                {businessConfig.serviceAreas.join(" · ")}
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    {/* Bottom Bar */}
+    <div class="border-t border-white/10 py-6">
+      <p class="text-center text-xs text-white/40">
+        &copy; {currentYear}
+        {siteConfig.name}. All rights reserved.
+      </p>
+    </div>
+  </Container>
+</footer>

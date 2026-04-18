@@ -1,0 +1,20 @@
+---
+import { getMapEmbedUrl, businessConfig } from "@/config/business";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+const embedUrl = getMapEmbedUrl();
+const { city, state } = businessConfig.address;
+---
+
+<iframe
+  src={embedUrl}
+  title={`Map showing ${city}, ${state} service area`}
+  class={cn("w-full border-0", className)}
+  allowfullscreen
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"></iframe>

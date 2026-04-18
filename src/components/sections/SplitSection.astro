@@ -1,0 +1,65 @@
+---
+import Container from "@/components/ui/Container.astro";
+import ImageSlot from "@/components/ui/ImageSlot.astro";
+import Badge from "@/components/ui/Badge.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  imageKey: string;
+  imagePosition?: "left" | "right";
+  badge?: { value: string; label: string };
+  bgColor?: "white" | "surface";
+  class?: string;
+  imageAspect?: string;
+}
+
+const {
+  imageKey,
+  imagePosition = "right",
+  badge,
+  bgColor = "white",
+  class: className,
+  imageAspect = "4/5",
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <div
+      class={cn(
+        "grid items-center gap-12 lg:grid-cols-2 lg:gap-16",
+        imagePosition === "left" && "lg:[&>*:first-child]:order-2",
+      )}
+    >
+      {/* Text Content */}
+      <div><slot /></div>
+
+      {/* Image */}
+      <div class="relative">
+        <ImageSlot
+          imageKey={imageKey}
+          aspectRatio={imageAspect}
+          class="rounded-2xl"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+        {
+          badge && (
+            <Badge
+              value={badge.value}
+              label={badge.label}
+              position={
+                imagePosition === "right" ? "bottom-left" : "bottom-right"
+              }
+            />
+          )
+        }
+      </div>
+    </div>
+  </Container>
+</section>

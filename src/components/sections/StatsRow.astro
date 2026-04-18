@@ -1,0 +1,41 @@
+---
+import Container from "@/components/ui/Container.astro";
+import StatItem from "@/components/ui/StatItem.astro";
+import { cn } from "@/lib/utils";
+import type { StatItem as StatItemType } from "@/types";
+
+interface Props {
+  stats: StatItemType[];
+  bgColor?: "white" | "surface" | "primary";
+  class?: string;
+}
+
+const {
+  stats,
+  bgColor = "surface",
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding-sm",
+    bgColor === "surface" && "bg-surface",
+    bgColor === "primary" && "bg-primary-600",
+    className,
+  )}
+>
+  <Container>
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      {
+        stats.map((stat) => (
+          <StatItem
+            value={stat.value}
+            label={stat.label}
+            light={bgColor === "primary"}
+          />
+        ))
+      }
+    </div>
+  </Container>
+</section>

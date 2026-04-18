@@ -1,0 +1,148 @@
+---
+import { ArrowRight } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import InfoBar from "@/components/layout/InfoBar.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import ServiceGrid from "@/components/sections/ServiceGrid.astro";
+import ProcessGrid from "@/components/sections/ProcessGrid.astro";
+import TestimonialSection from "@/components/sections/TestimonialSection.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import ServiceAreasSection from "@/components/sections/ServiceAreasSection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import ChecklistGrid from "@/components/sections/ChecklistGrid.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
+import ChecklistItem from "@/components/ui/ChecklistItem.astro";
+import { siteConfig } from "@/config/site";
+import { homepageContent } from "@/config/homepage";
+import { homepageFaqKeys } from "@/config/faqs";
+import { imageManifest } from "@/config/images";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+const content = homepageContent;
+const title = `${siteConfig.name} | ${siteConfig.tagline}`;
+
+// Preload hero image for LCP when available
+const heroImage = imageManifest["hero-home"];
+const publicDir = fileURLToPath(new URL("../../public", import.meta.url));
+const heroPreload =
+  heroImage && existsSync(publicDir + heroImage.src) ? heroImage.src : undefined;
+---
+
+<Layout
+  title={title}
+  description={siteConfig.description}
+  canonical={siteConfig.url}
+  ogTitle={title}
+  preloadImage={heroPreload}
+>
+  {/* Hero */}
+  <Hero />
+
+  {/* Info Bar */}
+  <InfoBar />
+
+  {/* About Preview */}
+  <SplitSection
+    imageKey={content.aboutPreview.image}
+    imagePosition="right"
+    badge={content.aboutPreview.badge}
+    imageAspect="4/5"
+  >
+    <SectionHeading
+      eyebrow={content.aboutPreview.eyebrow}
+      heading={content.aboutPreview.heading}
+    />
+    <p class="mb-6 text-base leading-relaxed text-muted md:text-lg">
+      {content.aboutPreview.paragraph}
+    </p>
+    <div class="mb-8 space-y-4">
+      {
+        content.aboutPreview.bullets.map((bullet) => (
+          <div>
+            <ChecklistItem text={bullet.title} class="font-semibold" />
+            <p class="ml-8 mt-1 text-sm text-muted">{bullet.description}</p>
+          </div>
+        ))
+      }
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <Button href="/contact">
+        Get a Quote
+        <ArrowRight slot="icon" className="h-5 w-5" />
+      </Button>
+      <Button href="/about" variant="outline">Learn More</Button>
+    </div>
+  </SplitSection>
+
+  {/* Services */}
+  <ServiceGrid />
+
+  {/* Standards */}
+  <SplitSection
+    imageKey={content.standards.image}
+    imagePosition="left"
+    badge={content.standards.badge}
+    bgColor="surface"
+    imageAspect="4/5"
+  >
+    <SectionHeading
+      eyebrow={content.standards.eyebrow}
+      heading={content.standards.heading}
+    />
+    {
+      content.standards.paragraphs.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+    <ChecklistGrid
+      items={content.standards.checklist}
+      columns={2}
+      class="mt-8"
+    />
+  </SplitSection>
+
+  {/* Process */}
+  <ProcessGrid
+    eyebrow={content.process.eyebrow}
+    heading={content.process.heading}
+    subtitle={content.process.subtitle}
+    bgColor="white"
+    primaryCta={{ label: "Get a Quote", href: "/contact" }}
+    secondaryCta={{ label: "Call (555) 123-4567", href: "tel:+15551234567" }}
+  />
+
+  {/* Testimonials */}
+  <TestimonialSection
+    eyebrow={content.testimonials.eyebrow}
+    heading={content.testimonials.heading}
+    subtitle={content.testimonials.subtitle}
+    bgColor="surface"
+  />
+
+  {/* Service Areas */}
+  <ServiceAreasSection />
+
+  {/* FAQ */}
+  <FAQSection
+    id="faq"
+    eyebrow={content.faq.eyebrow}
+    heading={content.faq.heading}
+    subtitle={content.faq.subtitle}
+    faqKeys={homepageFaqKeys}
+  />
+
+  {/* CTA */}
+  <CTASection
+    heading={content.cta.heading}
+    text={content.cta.text}
+    primaryCta={content.cta.primaryCta}
+    secondaryCta={content.cta.secondaryCta}
+  />
+
+  {/* Quote Form */}
+  <QuoteSection />
+</Layout>

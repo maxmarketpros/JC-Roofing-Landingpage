@@ -1,0 +1,78 @@
+---
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { FAQAccordion } from "@/components/ui/FAQAccordion";
+import { faqs, getFaqsByKeys } from "@/config/faqs";
+import { generateFAQSchema } from "@/lib/structured-data";
+import { cn } from "@/lib/utils";
+import type { FAQItem } from "@/types";
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  subtitle?: string;
+  faqKeys?: string[];
+  items?: FAQItem[];
+  bgColor?: "white" | "surface";
+  class?: string;
+  id?: string;
+  emitSchema?: boolean;
+}
+
+const {
+  eyebrow = "FAQ",
+  heading = "Frequently Asked Questions",
+  subtitle,
+  faqKeys,
+  items,
+  bgColor = "white",
+  class: className,
+  id,
+  emitSchema = true,
+} = Astro.props as Props;
+
+const displayFaqs = items || (faqKeys ? getFaqsByKeys(faqKeys) : faqs);
+const faqSchema = emitSchema && displayFaqs.length > 0
+  ? generateFAQSchema(displayFaqs)
+  : null;
+---
+
+{
+  faqSchema && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(faqSchema)}
+    />
+  )
+}
+
+<section
+  id={id}
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <div class="mx-auto max-w-3xl">
+      <SectionHeading
+        eyebrow={eyebrow}
+        heading={heading}
+        subtitle={subtitle}
+        align="center"
+      />
+
+      <div
+        class="divide-y divide-border rounded-2xl bg-white p-6 shadow-card md:p-8"
+      >
+        {
+          displayFaqs.map((faq) => (
+            <FAQAccordion client:visible item={faq} />
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

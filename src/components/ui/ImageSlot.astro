@@ -1,0 +1,127 @@
+---
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { ImageIcon } from "lucide-react";
+import { imageManifest } from "@/config/images";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  imageKey: string;
+  aspectRatio?: string;
+  priority?: boolean;
+  sizes?: string;
+  class?: string;
+  fill?: boolean;
+  overlayClassName?: string;
+}
+
+const {
+  imageKey,
+  aspectRatio,
+  priority = false,
+  class: className,
+  fill = false,
+  overlayClassName,
+} = Astro.props as Props;
+
+const config = imageManifest[imageKey];
+
+const publicDir = fileURLToPath(new URL("../../../public", import.meta.url));
+const imageExists = !!config && existsSync(publicDir + config.src);
+const shouldRender = !!config && imageExists;
+
+const focalX = config?.focalPoint?.x ?? 0.5;
+const focalY = config?.focalPoint?.y ?? 0.5;
+const objectPosition = `${focalX * 100}% ${focalY * 100}%`;
+
+const isDarkContext =
+  overlayClassName?.includes("bg-black") ||
+  overlayClassName?.includes("bg-gradient") ||
+  overlayClassName?.includes("foreground");
+---
+
+{
+  !shouldRender && fill && (
+    <div class={cn("relative overflow-hidden", className)}>
+      <div
+        class={cn(
+          "absolute inset-0 flex flex-col items-center justify-center gap-3",
+          isDarkContext ? "bg-foreground" : "bg-surface-dark",
+        )}
+      >
+        <ImageIcon
+          className={cn(
+            "h-12 w-12",
+            isDarkContext ? "text-white/20" : "text-muted-light",
+          )}
+          strokeWidth={1.5}
+        />
+        <span
+          class={cn(
+            "text-xs font-medium uppercase tracking-wider",
+            isDarkContext ? "text-white/20" : "text-muted-light",
+          )}
+        >
+          {imageKey}
+        </span>
+      </div>
+      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
+    </div>
+  )
+}
+
+{
+  !shouldRender && !fill && (
+    <div
+      class={cn(
+        "flex flex-col items-center justify-center gap-3 rounded-xl bg-surface-dark border border-border",
+        className,
+      )}
+      style={`aspect-ratio: ${aspectRatio || "4/3"}`}
+    >
+      <ImageIcon className="h-10 w-10 text-muted-light" strokeWidth={1.5} />
+      <span class="text-xs font-medium uppercase tracking-wider text-muted-light">
+        {imageKey}
+      </span>
+    </div>
+  )
+}
+
+{
+  shouldRender && fill && (
+    <div class={cn("relative overflow-hidden", className)}>
+      <img
+        src={config.src}
+        alt={config.alt}
+        width={config.width}
+        height={config.height}
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        class="absolute inset-0 h-full w-full object-cover"
+        style={`object-position: ${objectPosition}`}
+      />
+      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
+    </div>
+  )
+}
+
+{
+  shouldRender && !fill && (
+    <div
+      class={cn("relative overflow-hidden rounded-xl", className)}
+      style={aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
+    >
+      <img
+        src={config.src}
+        alt={config.alt}
+        width={config.width}
+        height={config.height}
+        loading={priority ? "eager" : "lazy"}
+        decoding={priority ? "sync" : "async"}
+        class="absolute inset-0 h-full w-full object-cover"
+        style={`object-position: ${objectPosition}`}
+      />
+      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
+    </div>
+  )
+}

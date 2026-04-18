@@ -1,0 +1,31 @@
+---
+import { MapPin, Clock, Phone } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import { businessConfig } from "@/config/business";
+---
+
+<div class="bg-primary-600 text-white">
+  <Container>
+    <div
+      class="flex flex-col items-center justify-between gap-3 py-3.5 text-sm md:flex-row md:gap-6"
+    >
+      <div class="flex items-center gap-2">
+        <MapPin className="h-4 w-4 text-primary-200" />
+        <span>{businessConfig.address.full}</span>
+      </div>
+      <div class="hidden h-4 w-px bg-white/20 md:block"></div>
+      <div class="flex items-center gap-2">
+        <Clock className="h-4 w-4 text-primary-200" />
+        <span>{businessConfig.hours.display}</span>
+      </div>
+      <div class="hidden h-4 w-px bg-white/20 md:block"></div>
+      <a
+        href={`tel:${businessConfig.phoneRaw}`}
+        class="flex items-center gap-2 transition-colors hover:text-primary-100"
+      >
+        <Phone className="h-4 w-4 text-primary-200" />
+        <span>Call {businessConfig.phone}</span>
+      </a>
+    </div>
+  </Container>
+</div>

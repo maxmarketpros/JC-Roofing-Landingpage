@@ -1,0 +1,32 @@
+---
+import * as LucideIcons from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { ProcessStep } from "@/types";
+
+interface Props {
+  step: ProcessStep;
+  class?: string;
+}
+
+const { step, class: className } = Astro.props as Props;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const IconComponent = step.icon ? (LucideIcons as any)[step.icon] : null;
+---
+
+<div
+  class={cn(
+    "relative flex flex-col rounded-2xl bg-white p-6 shadow-card md:p-8",
+    className,
+  )}
+>
+  <div class="mb-4 flex items-center gap-3">
+    <span
+      class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500 text-sm font-bold text-white"
+    >
+      {step.step}
+    </span>
+    {IconComponent && <IconComponent className="h-5 w-5 text-primary-400" />}
+  </div>
+  <h3 class="text-lg font-bold text-foreground">{step.title}</h3>
+  <p class="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
+</div>

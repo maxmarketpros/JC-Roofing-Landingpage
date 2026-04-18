@@ -1,0 +1,93 @@
+---
+import * as LucideIcons from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
+import { cn } from "@/lib/utils";
+import type { ServiceSubTopic } from "@/types";
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+  items: ServiceSubTopic[];
+  bgColor?: "white" | "surface";
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  class?: string;
+}
+
+const {
+  eyebrow,
+  heading,
+  subtitle,
+  items,
+  bgColor = "white",
+  primaryCta,
+  secondaryCta,
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div
+      class={cn(
+        "grid gap-6",
+        items.length <= 4 ? "md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3",
+      )}
+    >
+      {
+        items.map((item) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const IconComponent =
+            (LucideIcons as any)[item.icon] || LucideIcons.Star;
+          return (
+            <div class="group rounded-2xl border border-border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover md:p-8">
+              <div class="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-50 transition-colors group-hover:bg-primary-100">
+                <IconComponent className="h-7 w-7 text-primary-500" />
+              </div>
+              <h3 class="text-lg font-bold text-foreground">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {item.description}
+              </p>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    {
+      (primaryCta || secondaryCta) && (
+        <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          {primaryCta && (
+            <Button href={primaryCta.href} size="lg">
+              {primaryCta.label}
+              <ArrowRight slot="icon" className="h-5 w-5" />
+            </Button>
+          )}
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="outline" size="lg">
+              {secondaryCta.label}
+              <Phone slot="icon" className="h-5 w-5" />
+            </Button>
+          )}
+        </div>
+      )
+    }
+  </Container>
+</section>
