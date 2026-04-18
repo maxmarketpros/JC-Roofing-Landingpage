@@ -52,14 +52,14 @@ const isDarkContext =
         <ImageIcon
           className={cn(
             "h-12 w-12",
-            isDarkContext ? "text-white/20" : "text-muted-light",
+            isDarkContext ? "text-white/20" : "text-foreground-light",
           )}
           strokeWidth={1.5}
         />
         <span
           class={cn(
             "text-xs font-medium uppercase tracking-wider",
-            isDarkContext ? "text-white/20" : "text-muted-light",
+            isDarkContext ? "text-white/20" : "text-foreground-light",
           )}
         >
           {imageKey}
@@ -79,8 +79,8 @@ const isDarkContext =
       )}
       style={`aspect-ratio: ${aspectRatio || "4/3"}`}
     >
-      <ImageIcon className="h-10 w-10 text-muted-light" strokeWidth={1.5} />
-      <span class="text-xs font-medium uppercase tracking-wider text-muted-light">
+      <ImageIcon className="h-10 w-10 text-foreground-light" strokeWidth={1.5} />
+      <span class="text-xs font-medium uppercase tracking-wider text-foreground-light">
         {imageKey}
       </span>
     </div>

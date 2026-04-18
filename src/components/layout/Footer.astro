@@ -14,7 +14,7 @@ const currentYear = new Date().getFullYear();
       {/* Brand Column */}
       <div class="lg:col-span-1">
         <a href="/" class="text-xl font-bold">{siteConfig.name}</a>
-        <p class="mt-4 text-sm leading-relaxed text-white/60">
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
           {siteConfig.description}
         </p>
       </div>
@@ -23,7 +23,7 @@ const currentYear = new Date().getFullYear();
       {
         footerGroups.map((group) => (
           <div>
-            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40">
+            <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/70">
               {group.title}
             </h3>
             <ul class="space-y-3">
@@ -31,7 +31,7 @@ const currentYear = new Date().getFullYear();
                 <li>
                   <a
                     href={link.href}
-                    class="text-sm text-white/60 transition-colors hover:text-white"
+                    class="text-sm text-white/75 transition-colors hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -45,7 +45,7 @@ const currentYear = new Date().getFullYear();
       {/* Contact Column */}
       <div>
         <h3
-          class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40"
+          class="mb-4 text-sm font-semibold uppercase tracking-wider text-white/70"
         >
           Contact
         </h3>
@@ -53,7 +53,7 @@ const currentYear = new Date().getFullYear();
           <li>
             <a
               href={`tel:${businessConfig.phoneRaw}`}
-              class="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+              class="flex items-center gap-2 text-sm text-white/75 transition-colors hover:text-white"
             >
               <Phone className="h-4 w-4" />
               {businessConfig.phone}
@@ -62,14 +62,14 @@ const currentYear = new Date().getFullYear();
           <li>
             <a
               href={`mailto:${businessConfig.email}`}
-              class="flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+              class="flex items-center gap-2 text-sm text-white/75 transition-colors hover:text-white"
             >
               <Mail className="h-4 w-4" />
               {businessConfig.email}
             </a>
           </li>
           <li>
-            <span class="flex items-start gap-2 text-sm text-white/60">
+            <span class="flex items-start gap-2 text-sm text-white/75">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
               {businessConfig.address.full}
             </span>
@@ -79,10 +79,10 @@ const currentYear = new Date().getFullYear();
         {
           businessConfig.serviceAreas.length > 0 && (
             <div class="mt-6">
-              <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider text-white/40">
+              <h4 class="mb-2 text-xs font-semibold uppercase tracking-wider text-white/70">
                 Service Areas
               </h4>
-              <p class="text-sm text-white/60">
+              <p class="text-sm text-white/75">
                 {businessConfig.serviceAreas.join(" · ")}
               </p>
             </div>
@@ -93,7 +93,7 @@ const currentYear = new Date().getFullYear();
 
     {/* Bottom Bar */}
     <div class="border-t border-white/10 py-6">
-      <p class="text-center text-xs text-white/40">
+      <p class="text-center text-xs text-white/70">
         &copy; {currentYear}
         {siteConfig.name}. All rights reserved.
       </p>

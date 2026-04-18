@@ -47,13 +47,13 @@ const cities = businessConfig.serviceAreaCities;
                 {city.href ? (
                   <a
                     href={city.href}
-                    class="flex items-center justify-between rounded-lg bg-white/5 px-4 py-3 text-sm text-white/90 transition-colors hover:bg-white/15"
+                    class="flex items-center justify-between rounded-lg bg-white/5 px-4 py-3 text-sm text-white transition-colors hover:bg-white/15"
                   >
                     <span>{city.name}</span>
                     <ChevronRight className="h-4 w-4 text-white/40" />
                   </a>
                 ) : (
-                  <div class="flex items-center justify-between rounded-lg bg-white/5 px-4 py-3 text-sm text-white/90">
+                  <div class="flex items-center justify-between rounded-lg bg-white/5 px-4 py-3 text-sm text-white">
                     <span>{city.name}</span>
                     <ChevronRight className="h-4 w-4 text-white/40" />
                   </div>
@@ -63,11 +63,11 @@ const cities = businessConfig.serviceAreaCities;
           }
         </div>
 
-        <p class="mt-6 text-sm text-white/50">
+        <p class="mt-6 text-sm text-white/80">
           Don&apos;t see your area?{" "}
           <a
             href="/contact"
-            class="font-medium text-primary-200 underline transition-colors hover:text-white"
+            class="font-medium text-white underline transition-colors hover:text-primary-100"
           >
             Contact us
           </a>{" "}
