@@ -1,0 +1,175 @@
+---
+import {
+  CheckCircle2,
+  Phone,
+  ArrowLeft,
+  Clock,
+  ClipboardCheck,
+  HardHat,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+
+const title = `Thanks — We Got Your Request | ${siteConfig.name}`;
+const description = `Your free roof inspection request has been received. A JC Roofing crew member will reach out within one business day.`;
+
+const steps = [
+  {
+    icon: Phone,
+    title: "We'll Call You",
+    blurb:
+      "Someone from our crew calls to confirm your details and schedule a time that works.",
+    timing: "Within 24 hours",
+  },
+  {
+    icon: HardHat,
+    title: "Free Inspection",
+    blurb:
+      "We come out, climb up, and document everything with photos. No pressure, no sales pitch.",
+    timing: "Usually within 2–3 days",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Honest, Written Quote",
+    blurb:
+      "Line-item pricing for materials, labor, and warranty — so you know exactly what you're paying for.",
+    timing: "Same day",
+  },
+];
+---
+
+<Layout title={title} description={description} noindex>
+  <section
+    class="relative isolate flex min-h-[88vh] items-center overflow-hidden pt-24"
+  >
+    {/* Background — subtle radial glow */}
+    <div
+      class="absolute inset-0 -z-20 bg-gradient-to-b from-primary-900/30 via-background to-background"
+    >
+    </div>
+    <div
+      class="absolute inset-0 -z-10 bg-radial-accent opacity-60"
+    >
+    </div>
+    <div class="absolute inset-0 -z-10 bg-grid opacity-30"></div>
+
+    <Container class="relative py-20 md:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        {/* Success icon */}
+        <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-primary-400/30 bg-primary-600/20 backdrop-blur-sm md:h-24 md:w-24">
+          <CheckCircle2
+            className="h-10 w-10 text-primary-300 md:h-12 md:w-12"
+            strokeWidth={2}
+          />
+        </div>
+
+        <span
+          class="mt-8 inline-block text-xs font-bold uppercase tracking-[0.25em] text-primary-300"
+        >
+          Request Received
+        </span>
+
+        <h1
+          class="mt-3 text-balance text-4xl font-bold leading-[1.1] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-5xl md:text-6xl"
+        >
+          Thanks —
+          <span
+            class="block bg-gradient-to-r from-primary-200 to-primary-300 bg-clip-text pb-1 text-transparent"
+          >
+            we've got it from here.
+          </span>
+        </h1>
+
+        <p
+          class="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-foreground-light md:text-xl"
+        >
+          Your free roof inspection is on the books. A member of our Fort
+          Worth crew will reach out within one business day to lock in a
+          time that works for you.
+        </p>
+
+        {/* Phone CTA — for urgency */}
+        <div class="mt-9 inline-flex flex-col items-center gap-2 rounded-2xl border border-border bg-surface/80 px-7 py-5 backdrop-blur-sm">
+          <span
+            class="text-xs font-medium uppercase tracking-wider text-muted"
+          >
+            Got an active leak or need us sooner?
+          </span>
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center gap-2 text-2xl font-bold text-white transition-colors hover:text-primary-200 md:text-3xl"
+          >
+            <Phone className="h-6 w-6 text-primary-300" />
+            {businessConfig.phone}
+          </a>
+          <span class="text-xs text-muted">24/7 emergency response</span>
+        </div>
+      </div>
+
+      {/* What happens next */}
+      <div class="mx-auto mt-20 max-w-5xl">
+        <div class="text-center">
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            What Happens Next
+          </span>
+          <h2 class="mt-3 text-2xl font-bold text-white md:text-3xl">
+            Three quick steps. Zero pressure.
+          </h2>
+        </div>
+
+        <ol class="mt-10 grid gap-5 md:grid-cols-3">
+          {
+            steps.map(({ icon: Icon, title, blurb, timing }, i) => (
+              <li class="relative flex flex-col rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-primary-500/60">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-sm font-bold text-primary-300">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 rounded-full bg-primary-600/15 px-2.5 py-1 text-[11px] font-medium text-primary-200">
+                    <Clock className="h-3 w-3" />
+                    {timing}
+                  </span>
+                </div>
+                <div class="mt-5 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 class="mt-4 text-lg font-bold text-white">{title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                  {blurb}
+                </p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      {/* Back to home + reassurance */}
+      <div
+        class="mx-auto mt-16 flex max-w-3xl flex-col items-center gap-4 border-t border-border pt-10 text-center"
+      >
+        <p class="text-sm text-muted">
+          A confirmation email is on its way to the address you gave us. If
+          you don't see it in 5 minutes, check your spam folder — or just
+          give us a call at{" "}
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="font-semibold text-primary-300 underline-offset-4 hover:underline"
+          >
+            {businessConfig.phone}
+          </a>.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-primary-300 transition-colors hover:text-primary-200"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to homepage
+        </a>
+      </div>
+    </Container>
+  </section>
+</Layout>
