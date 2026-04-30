@@ -1,13 +1,14 @@
 export const siteConfig = {
-  name: "Premier Services",
-  tagline: "Professional Services in Springfield, IL",
+  name: "JC Roofing of Texas",
+  shortName: "JC Roofing",
+  tagline: "Fort Worth's 3rd-Generation Roofing Contractor",
   description:
-    "Professional service company in Springfield, IL delivering premium quality work with transparent pricing, owner-led accountability, and over 15 years of local experience.",
-  url: "https://example.com",
-  ogImage: "/images/og-image.jpg",
+    "Re-roofing, roof replacement, and new roof installation in Fort Worth and the DFW metro. Family-owned since 1996, with 90 years in the trade. Free inspections, licensed & insured.",
+  url: "https://jcroofingtexas.com",
+  ogImage: "/images/hero-home.webp",
   social: {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    google: "https://g.page/",
+    facebook: "",
+    instagram: "",
+    google: "",
   },
 } as const;

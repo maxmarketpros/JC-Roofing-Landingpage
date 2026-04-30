@@ -1,0 +1,189 @@
+---
+import { Phone, Menu, X } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+import { mainNav } from "@/config/navigation";
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-[9999] transition-all duration-300"
+  data-state="top"
+>
+  <div
+    class="header-bg absolute inset-0 -z-10 border-b border-transparent transition-all duration-300"
+  >
+  </div>
+
+  <Container>
+    <nav class="flex h-20 items-center justify-between">
+      {/* Logo */}
+      <a
+        href="#top"
+        class="flex items-center gap-3"
+        aria-label={`${siteConfig.name} home`}
+      >
+        <img
+          src="/images/logo.webp"
+          alt={siteConfig.name}
+          width="180"
+          height="60"
+          class="h-12 w-auto md:h-14"
+          loading="eager"
+          decoding="async"
+        />
+        <span class="sr-only">{siteConfig.name}</span>
+      </a>
+
+      {/* Desktop Navigation */}
+      <div class="hidden items-center gap-1 lg:flex">
+        {
+          mainNav.map((item) => (
+            <a
+              href={item.href}
+              class="rounded-md px-3 py-2 text-sm font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </div>
+
+      {/* Right Side */}
+      <div class="hidden items-center gap-3 lg:flex">
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-primary-400 hover:bg-primary-600/30"
+        >
+          <Phone className="h-4 w-4 text-primary-300" />
+          {businessConfig.phone}
+        </a>
+        <a
+          href="#contact"
+          class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-md"
+        >
+          Free Quote
+        </a>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <button
+        id="mobile-toggle"
+        class="rounded-md p-2 text-white transition-colors hover:bg-white/10 lg:hidden"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Menu className="h-6 w-6 menu-icon" />
+        <X className="hidden h-6 w-6 close-icon" />
+      </button>
+    </nav>
+
+    {/* Mobile Menu */}
+    <div
+      id="mobile-menu"
+      class="hidden border-t border-white/10 pb-6 pt-4 lg:hidden"
+    >
+      <div class="flex flex-col gap-1">
+        {
+          mainNav.map((item) => (
+            <a
+              href={item.href}
+              class="block rounded-md px-3 py-3 text-base font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+              data-mobile-link
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="mt-3 flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-base font-semibold text-white"
+        >
+          <Phone className="h-5 w-5 text-primary-300" />
+          Call {businessConfig.phone}
+        </a>
+        <a
+          href="#contact"
+          class="mt-2 inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-3 text-base font-semibold text-white"
+          data-mobile-link
+        >
+          Get a Free Quote
+        </a>
+      </div>
+    </div>
+  </Container>
+</header>
+
+<style>
+  /* Solid bg when scrolled or mobile menu open */
+  #site-header[data-state="scrolled"] .header-bg,
+  #site-header[data-state="open"] .header-bg {
+    background-color: rgba(10, 13, 12, 0.92);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Initial transparent gradient over hero */
+  #site-header[data-state="top"] .header-bg {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.55),
+      transparent
+    );
+  }
+</style>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("mobile-toggle");
+  const menu = document.getElementById("mobile-menu");
+  const menuIcon = toggle?.querySelector<HTMLElement>(".menu-icon");
+  const closeIcon = toggle?.querySelector<HTMLElement>(".close-icon");
+
+  function setState(state: "top" | "scrolled" | "open") {
+    header?.setAttribute("data-state", state);
+  }
+
+  function syncScrollState() {
+    if (!header) return;
+    if (header.getAttribute("data-state") === "open") return;
+    setState(window.scrollY > 24 ? "scrolled" : "top");
+  }
+
+  syncScrollState();
+  window.addEventListener("scroll", syncScrollState, { passive: true });
+
+  toggle?.addEventListener("click", () => {
+    if (!menu) return;
+    const isOpen = !menu.classList.contains("hidden");
+    if (isOpen) {
+      menu.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+      syncScrollState();
+    } else {
+      menu.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+      toggle.setAttribute("aria-expanded", "true");
+      setState("open");
+    }
+  });
+
+  // Close mobile menu when an anchor link is tapped
+  menu?.querySelectorAll<HTMLAnchorElement>("[data-mobile-link]").forEach(
+    (link) => {
+      link.addEventListener("click", () => {
+        menu.classList.add("hidden");
+        menuIcon?.classList.remove("hidden");
+        closeIcon?.classList.add("hidden");
+        toggle?.setAttribute("aria-expanded", "false");
+        syncScrollState();
+      });
+    }
+  );
+</script>

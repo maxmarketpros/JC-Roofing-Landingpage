@@ -5,9 +5,10 @@ import "@fontsource/plus-jakarta-sans/500.css";
 import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
 
-import { Header } from "@/components/layout/Header";
+import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
 import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
 import {
   generateLocalBusinessSchema,
   generateWebsiteSchema,
@@ -16,6 +17,7 @@ import {
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   canonical?: string;
   ogImage?: string;
   ogTitle?: string;
@@ -26,6 +28,7 @@ interface Props {
 const {
   title = `${siteConfig.name} | ${siteConfig.tagline}`,
   description = siteConfig.description,
+  keywords = "roofing contractor Fort Worth, roof replacement Fort Worth, re-roofing DFW, roof repair Fort Worth, new roof installation Texas, metal roofing Fort Worth, shingle roofing DFW, roof inspection Fort Worth, commercial roofing DFW, residential roofing Fort Worth, JC Roofing Texas",
   canonical,
   ogImage = siteConfig.ogImage,
   ogTitle,
@@ -51,36 +54,65 @@ const websiteSchema = generateWebsiteSchema();
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={siteConfig.name} />
     <link rel="canonical" href={canonicalUrl} />
 
     {
       noindex ? (
         <meta name="robots" content="noindex, nofollow" />
       ) : (
-        <meta
-          name="robots"
-          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-        />
+        <>
+          <meta
+            name="robots"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          />
+          <meta
+            name="googlebot"
+            content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          />
+          <meta name="bingbot" content="index, follow" />
+        </>
       )
     }
 
-    <meta name="theme-color" content="#2563eb" />
-    <meta name="color-scheme" content="light" />
+    {/* Local SEO — geo tags */}
+    <meta name="geo.region" content="US-TX" />
+    <meta name="geo.placename" content={`${businessConfig.address.city}, ${businessConfig.address.state}`} />
+    <meta
+      name="geo.position"
+      content={`${businessConfig.coordinates.lat};${businessConfig.coordinates.lng}`}
+    />
+    <meta
+      name="ICBM"
+      content={`${businessConfig.coordinates.lat}, ${businessConfig.coordinates.lng}`}
+    />
+
+    {/* Theme & PWA */}
+    <meta name="theme-color" content="#0a4f39" />
+    <meta name="color-scheme" content="dark" />
     <meta name="format-detection" content="telephone=yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
-    <meta name="application-name" content={siteConfig.name} />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content={siteConfig.shortName} />
+    <meta name="application-name" content={siteConfig.shortName} />
 
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    {/* Icons */}
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/images/logo.webp" />
     <link rel="manifest" href="/manifest.json" />
 
-    {/* DNS prefetch for lazy-loaded map embeds */}
+    {/* Resource hints — preconnect to third parties used on the page */}
+    <link rel="preconnect" href="https://www.google.com" />
     <link rel="dns-prefetch" href="https://www.google.com" />
+    <link rel="preconnect" href="https://maps.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://maps.gstatic.com" />
 
-    {/* Optional LCP image preload */}
+    {/* LCP image preload */}
     {
       preloadImage && (
         <link
@@ -99,10 +131,47 @@ const websiteSchema = generateWebsiteSchema();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:secure_url" content={absoluteOgImage} />
+    <meta property="og:image:type" content="image/webp" />
     <meta property="og:image:alt" content={ogTitleResolved} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
     <meta property="og:locale" content="en_US" />
+
+    {/* Open Graph — local business specifics */}
+    <meta
+      property="business:contact_data:street_address"
+      content={businessConfig.address.street}
+    />
+    <meta
+      property="business:contact_data:locality"
+      content={businessConfig.address.city}
+    />
+    <meta
+      property="business:contact_data:region"
+      content={businessConfig.address.state}
+    />
+    <meta
+      property="business:contact_data:postal_code"
+      content={businessConfig.address.zip}
+    />
+    <meta property="business:contact_data:country_name" content="USA" />
+    <meta
+      property="business:contact_data:phone_number"
+      content={businessConfig.phone}
+    />
+    <meta
+      property="business:contact_data:email"
+      content={businessConfig.email}
+    />
+    <meta
+      property="place:location:latitude"
+      content={String(businessConfig.coordinates.lat)}
+    />
+    <meta
+      property="place:location:longitude"
+      content={String(businessConfig.coordinates.lng)}
+    />
 
     {/* Twitter Card */}
     <meta name="twitter:card" content="summary_large_image" />
@@ -111,8 +180,18 @@ const websiteSchema = generateWebsiteSchema();
     <meta name="twitter:image" content={absoluteOgImage} />
     <meta name="twitter:image:alt" content={ogTitleResolved} />
 
+    {/*
+      Verification placeholders — uncomment + paste tokens when you set up
+      Google Search Console, Bing Webmaster Tools, etc.
+
+      <meta name="google-site-verification" content="" />
+      <meta name="msvalidate.01" content="" />
+      <meta name="facebook-domain-verification" content="" />
+    */}
+
     <meta name="generator" content={Astro.generator} />
 
+    {/* Structured data — site-wide */}
     <script
       type="application/ld+json"
       is:inline
@@ -133,8 +212,9 @@ const websiteSchema = generateWebsiteSchema();
     >
       Skip to main content
     </a>
-    <Header client:load />
+    <Header />
     <main id="main-content" class="flex-1">
+      <span id="top" class="sr-only">Top</span>
       <slot />
     </main>
     <Footer />

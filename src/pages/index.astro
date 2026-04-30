@@ -1,148 +1,1069 @@
 ---
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  CheckCircle2,
+  ShieldCheck,
+  Hammer,
+  Wrench,
+  Search,
+  Home,
+  Layers,
+  Star,
+  Quote,
+  ChevronDown,
+  Sparkles,
+  Calendar,
+  HardHat,
+  Award,
+  Users,
+} from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
-import Hero from "@/components/sections/Hero.astro";
-import InfoBar from "@/components/layout/InfoBar.astro";
-import SplitSection from "@/components/sections/SplitSection.astro";
-import ServiceGrid from "@/components/sections/ServiceGrid.astro";
-import ProcessGrid from "@/components/sections/ProcessGrid.astro";
-import TestimonialSection from "@/components/sections/TestimonialSection.astro";
-import FAQSection from "@/components/sections/FAQSection.astro";
-import CTASection from "@/components/sections/CTASection.astro";
-import ServiceAreasSection from "@/components/sections/ServiceAreasSection.astro";
-import QuoteSection from "@/components/sections/QuoteSection.astro";
-import ChecklistGrid from "@/components/sections/ChecklistGrid.astro";
-import SectionHeading from "@/components/ui/SectionHeading.astro";
-import Button from "@/components/ui/Button.astro";
-import ChecklistItem from "@/components/ui/ChecklistItem.astro";
+import Container from "@/components/ui/Container.astro";
 import { siteConfig } from "@/config/site";
-import { homepageContent } from "@/config/homepage";
-import { homepageFaqKeys } from "@/config/faqs";
-import { imageManifest } from "@/config/images";
-import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { businessConfig } from "@/config/business";
+import { getMapEmbedUrl } from "@/config/business";
+import {
+  generateWebPageSchema,
+  generateServiceSchema,
+  generateAggregateRatingSchema,
+  generateReviewSchemas,
+} from "@/lib/structured-data";
 
-const content = homepageContent;
-const title = `${siteConfig.name} | ${siteConfig.tagline}`;
+const title = `Fort Worth Roofing Contractor | ${siteConfig.name}`;
+const description = `Fort Worth roof replacement, re-roofing & new roof installation. 3rd-generation roofers · 90 yrs in the trade · Licensed & Insured · Free inspections. Call ${businessConfig.phone}.`;
 
-// Preload hero image for LCP when available
-const heroImage = imageManifest["hero-home"];
-const publicDir = fileURLToPath(new URL("../../public", import.meta.url));
-const heroPreload =
-  heroImage && existsSync(publicDir + heroImage.src) ? heroImage.src : undefined;
+const trustBadges = [
+  { icon: ShieldCheck, label: "Licensed & Insured" },
+  { icon: Calendar, label: "Free Inspections" },
+  { icon: Award, label: "30 Years in Business" },
+  { icon: Home, label: "Fort Worth Local" },
+];
+
+const services = [
+  {
+    icon: Layers,
+    title: "Roof Replacement",
+    blurb:
+      "Full tear-off and replacement with premium shingles or metal — built to outlast Texas hail, heat, and wind. Most replacements wrap in 1–2 days.",
+    image: "/images/aerial-shingle-home.webp",
+    alt: "Architectural shingle roof replacement on a DFW home",
+  },
+  {
+    icon: Hammer,
+    title: "Re-Roofing",
+    blurb:
+      "Tired roof? We strip it back, fix the deck, and install a new system that adds curb appeal and 30+ years of protection in one project.",
+    image: "/images/slate-shingle-home.webp",
+    alt: "Slate-look architectural shingle re-roof",
+  },
+  {
+    icon: Home,
+    title: "New Roof Installation",
+    blurb:
+      "Building new in DFW? We work with your builder or directly with you to install the right roof system for your design, budget, and HOA.",
+    image: "/images/shingle-stone-home.webp",
+    alt: "New roof installation on a stone-front DFW home",
+  },
+  {
+    icon: Wrench,
+    title: "Roof Repair & Leak Fix",
+    blurb:
+      "Storm damage, mystery leaks, missing shingles, popped nails — we find the cause, fix it once, and warranty the work. 24/7 emergency response.",
+    image: "/images/red-metal-home.webp",
+    alt: "Roof repair on a red metal residential roof",
+  },
+  {
+    icon: Search,
+    title: "Roof Inspections",
+    blurb:
+      "Free, honest inspections with photos. Buying, selling, post-storm, or just want to know how much life your roof has left — we'll tell you straight.",
+    image: "/images/aerial-residential-metal.webp",
+    alt: "Aerial roof inspection of a DFW residential property",
+  },
+  {
+    icon: Sparkles,
+    title: "Custom Metal Roofing",
+    blurb:
+      "Standing seam, R-panel, and custom profiles fabricated on-site at our Fort Worth shop. Save on the middleman, save on insurance, save on cooling.",
+    image: "/images/metal-detail.webp",
+    alt: "Close-up of custom standing-seam metal roofing",
+  },
+];
+
+const reasons = [
+  {
+    icon: Users,
+    title: "3 generations. 90 years in the trade.",
+    description:
+      "Our grandfather started roofing in 1936. Our father in 1959. We started in 1985. Roofing is the only thing this family has ever done.",
+  },
+  {
+    icon: HardHat,
+    title: "On-site metal fabrication",
+    description:
+      "We fabricate metal panels right at our Fort Worth shop. No middleman markup, faster turnaround, and exact-fit panels that don't leak at the seams.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Licensed, insured, and clean",
+    description:
+      "Full liability and workers' comp on every crew. We tarp your landscaping, magnet-sweep your driveway, and don't leave until your yard looks better than we found it.",
+  },
+  {
+    icon: Award,
+    title: "Built for Texas weather",
+    description:
+      "Hail, 110° summers, and 70 mph wind events are our normal. We spec materials that hold up here — not whatever's cheapest at the supply house.",
+  },
+];
+
+const process = [
+  {
+    step: "01",
+    title: "Free On-Site Inspection",
+    blurb:
+      "We come out, climb up, and document everything with photos. You get a clear written report — no pressure, no sales pitch.",
+  },
+  {
+    step: "02",
+    title: "Honest, Itemized Quote",
+    blurb:
+      "Line-item pricing for materials, labor, and warranty. We'll walk you through every line so you know exactly what you're paying for.",
+  },
+  {
+    step: "03",
+    title: "Built Right, Built Once",
+    blurb:
+      "Our crew shows up on time, works clean, and keeps you in the loop daily. Most replacements are done in 1–2 days.",
+  },
+  {
+    step: "04",
+    title: "Final Walkthrough + Warranty",
+    blurb:
+      "We hand-inspect every roof at completion, magnet-sweep the property, and back the job with a written workmanship warranty.",
+  },
+];
+
+const reviews = [
+  {
+    name: "Daniel Reyes",
+    location: "Keller, TX",
+    rating: 5,
+    text: "After two hailstorms in three years, I needed a roofer who'd actually call me back. JC came out the next morning, walked me through the insurance side, and had a new roof on the house inside of a week. Zero nails in my driveway when they left.",
+    job: "Full roof replacement",
+  },
+  {
+    name: "Marisol Hernández",
+    location: "Fort Worth, TX",
+    rating: 5,
+    text: "We got three quotes for a re-roof. JC wasn't the cheapest — but they were the only ones who actually got on the roof, took photos, and explained what we were paying for. The crew was respectful, on time, and the workmanship is gorgeous.",
+    job: "Re-roofing & decking repair",
+  },
+  {
+    name: "Tom Whitaker",
+    location: "Mansfield, TX",
+    rating: 5,
+    text: "Wanted standing seam metal on our new build. They fabricated everything on-site and the seams are dead-straight. You can tell this is a family that's been doing this forever — they care how it looks from the curb.",
+    job: "Custom metal roof installation",
+  },
+];
+
+// ===== STRUCTURED DATA INPUTS =====
+const reviewSchemaInputs = reviews.map((r) => ({
+  author: r.name,
+  location: r.location.replace(", TX", ""),
+  rating: r.rating,
+  body: r.text,
+  jobType: r.job,
+}));
+
+const webPageSchema = generateWebPageSchema();
+const serviceSchemas = services.map((s) =>
+  generateServiceSchema({ name: s.title, description: s.blurb })
+);
+const aggregateRatingSchema = generateAggregateRatingSchema(reviewSchemaInputs);
+const reviewSchemas = generateReviewSchemas(reviewSchemaInputs);
+
+const faqs = [
+  {
+    q: "How long does a full roof replacement take?",
+    a: `Most asphalt shingle replacements in DFW are completed in 1–2 days. Larger homes, complex roofs, and metal jobs run longer — we'll give you an exact timeline in your quote and stick to it.`,
+  },
+  {
+    q: "Do you handle insurance claims?",
+    a: `Yes. After a hail or wind event, we'll inspect your roof for free and meet your adjuster on-site. We document everything they need to approve a fair claim — and we never inflate or "find" damage that isn't there.`,
+  },
+  {
+    q: "Are you licensed and insured?",
+    a: `Yes — fully licensed in Texas, with general liability and workers' compensation on every crew member. We're happy to send copies before any work starts.`,
+  },
+  {
+    q: "What roofing materials do you install?",
+    a: `Architectural and impact-rated shingles, standing-seam metal, R-panel metal, stone-coated steel, and tile. We fabricate metal panels on-site at our Fort Worth shop, which keeps cost down and quality up.`,
+  },
+  {
+    q: "How do I know if I actually need a new roof?",
+    a: `If your roof is over 18–20 years old, has visible hail damage, granule loss, missing shingles, or interior leaks — it's worth a free inspection. We'll give you an honest assessment, including how much life is left, so you don't replace it before you have to.`,
+  },
+  {
+    q: "Do you offer financing?",
+    a: `Yes — we offer financing options for qualified homeowners so a roof replacement doesn't have to wait. Ask about it during your free quote.`,
+  },
+];
 ---
 
 <Layout
   title={title}
-  description={siteConfig.description}
+  description={description}
   canonical={siteConfig.url}
   ogTitle={title}
-  preloadImage={heroPreload}
+  preloadImage="/images/hero-home.webp"
 >
-  {/* Hero */}
-  <Hero />
-
-  {/* Info Bar */}
-  <InfoBar />
-
-  {/* About Preview */}
-  <SplitSection
-    imageKey={content.aboutPreview.image}
-    imagePosition="right"
-    badge={content.aboutPreview.badge}
-    imageAspect="4/5"
+  {/* ============ HERO ============ */}
+  <section
+    class="relative isolate flex min-h-[88vh] items-center overflow-hidden pt-24"
   >
-    <SectionHeading
-      eyebrow={content.aboutPreview.eyebrow}
-      heading={content.aboutPreview.heading}
+    {/* Background */}
+    <img
+      src="/images/hero-home.webp"
+      alt="JC Roofing project — Texas hill country home with new metal roof"
+      width="1920"
+      height="1080"
+      class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
     />
-    <p class="mb-6 text-base leading-relaxed text-muted md:text-lg">
-      {content.aboutPreview.paragraph}
-    </p>
-    <div class="mb-8 space-y-4">
-      {
-        content.aboutPreview.bullets.map((bullet) => (
-          <div>
-            <ChecklistItem text={bullet.title} class="font-semibold" />
-            <p class="ml-8 mt-1 text-sm text-muted">{bullet.description}</p>
+    <div
+      class="absolute inset-0 -z-10 bg-gradient-to-b from-black/75 via-black/65 to-background"
+    >
+    </div>
+    <div
+      class="absolute inset-0 -z-10 bg-radial-accent mix-blend-screen opacity-70"
+    >
+    </div>
+
+    <Container class="relative py-16 md:py-24">
+      <div class="max-w-3xl">
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-600/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-100 backdrop-blur-sm"
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-primary-300"></span>
+          Fort Worth · Family-Owned Since 1996
+        </span>
+
+        <h1
+          class="mt-6 text-balance text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl"
+        >
+          Your Fort Worth roof,
+          <span class="block text-primary-300">replaced right.</span>
+        </h1>
+
+        <p
+          class="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white/85 md:text-xl"
+        >
+          Re-roofing, replacement, and new installs across DFW — built by a
+          third-generation family of roofers with 90 years in the trade. Free
+          inspection. Honest quote. Built once, built right.
+        </p>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-primary-500 sm:text-lg"
+          >
+            Get My Free Quote
+            <ArrowRight className="h-5 w-5" />
+          </a>
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-white/5 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white hover:text-foreground sm:text-lg"
+          >
+            <Phone className="h-5 w-5" />
+            Call {businessConfig.phone}
+          </a>
+        </div>
+
+        {/* Trust strip */}
+        <ul
+          class="mt-10 grid grid-cols-2 gap-x-6 gap-y-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-7"
+        >
+          {
+            trustBadges.map(({ icon: Icon, label }) => (
+              <li class="flex items-center gap-2 text-sm font-medium text-white/85">
+                <Icon className="h-4 w-4 text-primary-300" />
+                {label}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </Container>
+
+    {/* Bottom fade into background */}
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background"
+    >
+    </div>
+  </section>
+
+  {/* ============ STATS / HERITAGE STRIP ============ */}
+  <section class="relative border-y border-border bg-surface">
+    <Container>
+      <div class="grid divide-y divide-border md:grid-cols-4 md:divide-x md:divide-y-0">
+        {
+          [
+            { value: "30", label: "Years as JC Roofing" },
+            { value: "90", label: "Years of family trade" },
+            { value: "3", label: "Generations of roofers" },
+            { value: "24/7", label: "Emergency response" },
+          ].map((stat) => (
+            <div class="flex flex-col items-center px-6 py-8 text-center">
+              <span class="font-bold text-4xl text-primary-300 md:text-5xl">
+                {stat.value}
+              </span>
+              <span class="mt-2 text-sm font-medium uppercase tracking-wider text-muted">
+                {stat.label}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SERVICES ============ */}
+  <section id="services" class="section-padding scroll-mt-24">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          What We Do
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Everything you need under one roof.
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Replacement, re-roofing, new installs, repairs, and inspections —
+          residential and commercial — across Fort Worth and the DFW metro.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          services.map(({ icon: Icon, title, blurb, image, alt }) => (
+            <article class="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-primary-500 hover:shadow-card-hover">
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={image}
+                  alt={alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent" />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <div class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 class="text-xl font-bold text-white">{title}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-foreground-light">
+                  {blurb}
+                </p>
+                <a
+                  href="#contact"
+                  class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-300 transition-colors hover:text-primary-200"
+                >
+                  Get a free quote
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="#contact"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-md"
+        >
+          Schedule My Free Inspection
+          <ArrowRight className="h-5 w-5" />
+        </a>
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/15 bg-transparent px-7 py-4 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/5"
+        >
+          <Phone className="h-5 w-5 text-primary-300" />
+          {businessConfig.phone}
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ WHY JC ============ */}
+  <section
+    id="why-jc"
+    class="relative scroll-mt-24 overflow-hidden border-y border-border bg-surface"
+  >
+    <div class="absolute inset-0 bg-grid opacity-50"></div>
+    <Container class="relative">
+      <div class="grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2 lg:gap-16">
+        {/* Image */}
+        <div class="relative">
+          <div class="relative overflow-hidden rounded-2xl shadow-card-hover">
+            <img
+              src="/images/metal-detail.webp"
+              alt="Close-up of standing seam metal roof installed by JC Roofing"
+              width="1100"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/5] w-full object-cover sm:aspect-[5/6]"
+            />
           </div>
-        ))
-      }
-    </div>
-    <div class="flex flex-wrap gap-4">
-      <Button href="/contact">
-        Get a Quote
-        <ArrowRight slot="icon" className="h-5 w-5" />
-      </Button>
-      <Button href="/about" variant="outline">Learn About Us</Button>
-    </div>
-  </SplitSection>
+          {/* Floating badge */}
+          <div
+            class="absolute -bottom-6 -right-4 hidden rounded-2xl border border-border bg-background p-5 shadow-card-hover sm:block sm:-right-6"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600 text-white"
+              >
+                <Award className="h-6 w-6" />
+              </div>
+              <div>
+                <div class="text-xs font-medium uppercase tracking-wider text-muted">
+                  Family Trade Since
+                </div>
+                <div class="text-2xl font-bold text-white">1936</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  {/* Services */}
-  <ServiceGrid />
+        {/* Content */}
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Why JC Roofing
+          </span>
+          <h2
+            class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+          >
+            The roofer your neighbors actually recommend.
+          </h2>
+          <p class="mt-5 text-lg leading-relaxed text-foreground-light">
+            Our grandfather started laying roofs in Texas in 1936 and raised
+            five sons in the trade. Today, JC Roofing is a third-generation
+            family operation built on the same idea: do the work right, treat
+            the homeowner like a neighbor, and let the roof speak for itself
+            for the next 30 years.
+          </p>
 
-  {/* Standards */}
-  <SplitSection
-    imageKey={content.standards.image}
-    imagePosition="left"
-    badge={content.standards.badge}
-    bgColor="surface"
-    imageAspect="4/5"
+          <ul class="mt-8 space-y-5">
+            {
+              reasons.map(({ icon: Icon, title, description }) => (
+                <li class="flex items-start gap-4">
+                  <div class="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 class="text-base font-semibold text-white md:text-lg">
+                      {title}
+                    </h3>
+                    <p class="mt-1 text-sm leading-relaxed text-foreground-light md:text-base">
+                      {description}
+                    </p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-6 py-3 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+            >
+              Get a Free Quote
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <a
+              href={`tel:${businessConfig.phoneRaw}`}
+              class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/15 px-6 py-3 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/5"
+            >
+              <Phone className="h-5 w-5 text-primary-300" />
+              {businessConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ PROCESS ============ */}
+  <section id="process" class="section-padding scroll-mt-24">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Our Process
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Four steps. Zero surprises.
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          From the first phone call to the final magnet-sweep, here's exactly
+          how we work.
+        </p>
+      </div>
+
+      <ol
+        class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-5"
+      >
+        {
+          process.map(({ step, title, blurb }, i) => (
+            <li class="relative flex flex-col rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-primary-500/60">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold text-primary-300">
+                  {step}
+                </span>
+                <div class="h-px flex-1 bg-border" />
+              </div>
+              <h3 class="mt-4 text-xl font-bold text-white">{title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-foreground-light">
+                {blurb}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="mt-14 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="#contact"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+        >
+          Start with a Free Inspection
+          <ArrowRight className="h-5 w-5" />
+        </a>
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/15 px-7 py-4 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/5"
+        >
+          <Phone className="h-5 w-5 text-primary-300" />
+          Call {businessConfig.phone}
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ REVIEWS ============ */}
+  <section
+    id="reviews"
+    class="relative scroll-mt-24 border-y border-border bg-surface section-padding"
   >
-    <SectionHeading
-      eyebrow={content.standards.eyebrow}
-      heading={content.standards.heading}
+    <div class="absolute inset-0 bg-radial-accent opacity-60"></div>
+    <Container class="relative">
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          What DFW Homeowners Say
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Roofs done right. Neighbors who say so.
+        </h2>
+      </div>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {
+          reviews.map(({ name, location, rating, text, job }) => (
+            <figure class="flex h-full flex-col rounded-2xl border border-border bg-background/60 p-7 backdrop-blur-sm">
+              <Quote className="h-8 w-8 text-primary-400" />
+              <div
+                class="mt-4 flex items-center gap-1"
+                aria-label={`Rated ${rating} out of 5`}
+              >
+                {Array.from({ length: rating }).map(() => (
+                  <Star className="h-4 w-4 fill-secondary-400 text-secondary-400" />
+                ))}
+              </div>
+              <blockquote class="mt-4 flex-1 text-base leading-relaxed text-foreground-light">
+                {text}
+              </blockquote>
+              <figcaption class="mt-6 border-t border-border pt-5">
+                <div class="font-semibold text-white">{name}</div>
+                <div class="mt-1 text-xs text-muted">
+                  {location} · {job}
+                </div>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SERVICE AREA ============ */}
+  <section id="service-area" class="section-padding scroll-mt-24">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Where We Work
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          {businessConfig.serviceAreasHeading}
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          {businessConfig.serviceAreasSubtitle}
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
+        {/* Cities */}
+        <div
+          class="rounded-2xl border border-border bg-surface p-6 md:p-8 lg:col-span-2"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <MapPin className="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-white">Cities We Serve</h3>
+          </div>
+
+          <ul class="mt-5 grid grid-cols-2 gap-2">
+            {
+              businessConfig.serviceAreaCities.map((city) => (
+                <li class="flex items-center gap-2 rounded-lg bg-background/60 px-3.5 py-2.5 text-sm text-white">
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-primary-300" />
+                  {city.name}
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-6 text-sm text-foreground-light">
+            Don't see your city?{" "}
+            <a
+              href="#contact"
+              class="font-semibold text-primary-300 underline-offset-4 hover:underline"
+            >
+              Reach out
+            </a>
+            {" "}— we cover most of the DFW metroplex.
+          </p>
+        </div>
+
+        {/* Map */}
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-surface lg:col-span-3"
+        >
+          <iframe
+            src={getMapEmbedUrl()}
+            title="JC Roofing of Texas — Fort Worth office"
+            loading="lazy"
+            class="h-[420px] w-full border-0 lg:h-full lg:min-h-[480px]"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section
+    id="faq"
+    class="relative scroll-mt-24 border-t border-border bg-surface section-padding"
+  >
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          FAQ
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Common questions, straight answers.
+        </h2>
+      </div>
+
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div class="overflow-hidden rounded-2xl border border-border bg-background/60 backdrop-blur-sm">
+          {
+            faqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+
+        <p class="mt-8 text-center text-sm text-muted">
+          Still got a question?{" "}
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="font-semibold text-primary-300 underline-offset-4 hover:underline"
+          >
+            Call {businessConfig.phone}
+          </a>
+          {" "}— we'll pick up.
+        </p>
+      </div>
+    </Container>
+
+    {/* ===== Structured data ===== */}
+    {/* WebPage */}
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(webPageSchema)}
     />
+
+    {/* Service (one node per service) */}
     {
-      content.standards.paragraphs.map((p) => (
-        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      serviceSchemas.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
       ))
     }
-    <ChecklistGrid
-      items={content.standards.checklist}
-      columns={2}
-      class="mt-8"
+
+    {/* AggregateRating */}
+    {
+      aggregateRatingSchema && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(aggregateRatingSchema)}
+        />
+      )
+    }
+
+    {/* Reviews (one per node) */}
+    {
+      reviewSchemas.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      ))
+    }
+
+    {/* FAQPage */}
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map(({ q, a }) => ({
+          "@type": "Question",
+          name: q,
+          acceptedAnswer: { "@type": "Answer", text: a },
+        })),
+      })}
     />
-  </SplitSection>
+  </section>
 
-  {/* Process */}
-  <ProcessGrid
-    eyebrow={content.process.eyebrow}
-    heading={content.process.heading}
-    subtitle={content.process.subtitle}
-    bgColor="white"
-    primaryCta={{ label: "Get a Quote", href: "/contact" }}
-    secondaryCta={{ label: "Call (555) 123-4567", href: "tel:+15551234567" }}
-  />
+  {/* ============ CONTACT / FORM ============ */}
+  <section id="contact" class="scroll-mt-24 section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Get a Free Quote
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Tell us about your roof.
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Drop your info below or call us directly. Most inspections get
+          scheduled within 24 hours.
+        </p>
+      </div>
 
-  {/* Testimonials */}
-  <TestimonialSection
-    eyebrow={content.testimonials.eyebrow}
-    heading={content.testimonials.heading}
-    subtitle={content.testimonials.subtitle}
-    bgColor="surface"
-  />
+      <div class="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
+        {/* Form */}
+        <div class="lg:col-span-3">
+          <form
+            name="quote"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            class="rounded-2xl border border-border bg-surface p-6 shadow-card md:p-8"
+          >
+            <input type="hidden" name="form-name" value="quote" />
+            <p class="hidden">
+              <label>
+                Don't fill this out if you're human:
+                <input name="bot-field" />
+              </label>
+            </p>
 
-  {/* Service Areas */}
-  <ServiceAreasSection />
+            <div class="grid gap-5 md:grid-cols-2">
+              <div>
+                <label
+                  for="quote-name"
+                  class="mb-2 block text-sm font-medium text-foreground-light"
+                >
+                  Full Name <span class="text-primary-300">*</span>
+                </label>
+                <input
+                  id="quote-name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  placeholder="Your name"
+                  class="w-full rounded-lg border border-border bg-background px-4 py-3 text-base text-white placeholder:text-muted focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+                />
+              </div>
+              <div>
+                <label
+                  for="quote-phone"
+                  class="mb-2 block text-sm font-medium text-foreground-light"
+                >
+                  Phone <span class="text-primary-300">*</span>
+                </label>
+                <input
+                  id="quote-phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                  placeholder="(817) 555-1234"
+                  class="w-full rounded-lg border border-border bg-background px-4 py-3 text-base text-white placeholder:text-muted focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+                />
+              </div>
+            </div>
 
-  {/* FAQ */}
-  <FAQSection
-    id="faq"
-    eyebrow={content.faq.eyebrow}
-    heading={content.faq.heading}
-    subtitle={content.faq.subtitle}
-    faqKeys={homepageFaqKeys}
-  />
+            <div class="mt-5">
+              <label
+                for="quote-email"
+                class="mb-2 block text-sm font-medium text-foreground-light"
+              >
+                Email <span class="text-primary-300">*</span>
+              </label>
+              <input
+                id="quote-email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                placeholder="you@example.com"
+                class="w-full rounded-lg border border-border bg-background px-4 py-3 text-base text-white placeholder:text-muted focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+              />
+            </div>
 
-  {/* CTA */}
-  <CTASection
-    heading={content.cta.heading}
-    text={content.cta.text}
-    primaryCta={content.cta.primaryCta}
-    secondaryCta={content.cta.secondaryCta}
-  />
+            <div class="mt-5">
+              <label
+                for="quote-details"
+                class="mb-2 block text-sm font-medium text-foreground-light"
+              >
+                Details or Questions
+              </label>
+              <textarea
+                id="quote-details"
+                name="details"
+                rows="5"
+                placeholder="Tell us about your roof — any leaks, hail damage, or questions you have…"
+                class="w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-base text-white placeholder:text-muted focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+              ></textarea>
+            </div>
 
-  {/* Quote Form */}
-  <QuoteSection />
+            <button
+              type="submit"
+              class="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-primary-500 sm:w-auto"
+            >
+              Request My Free Quote
+              <ArrowRight className="h-5 w-5" />
+            </button>
+
+            <p class="mt-4 text-xs text-muted">
+              By submitting, you agree to be contacted about your roofing
+              project. We never share your info.
+            </p>
+          </form>
+        </div>
+
+        {/* Contact details */}
+        <aside class="lg:col-span-2">
+          <div
+            class="h-full rounded-2xl border border-border bg-surface p-6 md:p-8"
+          >
+            <h3 class="text-xl font-bold text-white">Prefer to call?</h3>
+            <p class="mt-2 text-sm text-foreground-light">
+              The fastest way to get on the schedule. We pick up Mon–Sat, and
+              we run 24/7 emergency response for active leaks.
+            </p>
+
+            <div class="mt-6 space-y-5">
+              <a
+                href={`tel:${businessConfig.phoneRaw}`}
+                class="flex items-center gap-3 transition-colors hover:text-primary-200"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+                >
+                  <Phone className="h-5 w-5" />
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-medium uppercase tracking-wider text-muted"
+                  >
+                    Phone
+                  </p>
+                  <p class="font-semibold text-white">
+                    {businessConfig.phone}
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href={`mailto:${businessConfig.email}`}
+                class="flex items-center gap-3 transition-colors hover:text-primary-200"
+              >
+                <div
+                  class="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+                >
+                  <Mail className="h-5 w-5" />
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-medium uppercase tracking-wider text-muted"
+                  >
+                    Email
+                  </p>
+                  <p class="font-semibold text-white">
+                    {businessConfig.email}
+                  </p>
+                </div>
+              </a>
+
+              <div class="flex items-start gap-3">
+                <div
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+                >
+                  <MapPin className="h-5 w-5" />
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-medium uppercase tracking-wider text-muted"
+                  >
+                    Office
+                  </p>
+                  <p class="font-semibold text-white">
+                    {businessConfig.address.street}
+                  </p>
+                  <p class="text-sm text-foreground-light">
+                    {businessConfig.address.city},{" "}
+                    {businessConfig.address.state} {businessConfig.address.zip}
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div
+                  class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+                >
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-medium uppercase tracking-wider text-muted"
+                  >
+                    Hours
+                  </p>
+                  <p class="font-semibold text-white">Mon–Sat: 8 AM – 5 PM</p>
+                  <p class="text-sm text-foreground-light">
+                    24/7 Emergency Response
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FINAL CTA BANNER ============ */}
+  <section class="relative overflow-hidden bg-primary-700">
+    <div class="absolute inset-0 bg-grid opacity-20"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600"
+    >
+    </div>
+    <Container class="relative">
+      <div
+        class="flex flex-col items-center justify-between gap-6 py-12 text-center md:flex-row md:py-14 md:text-left"
+      >
+        <div>
+          <h2 class="text-balance text-2xl font-bold text-white md:text-3xl">
+            Ready to lock in your free roof inspection?
+          </h2>
+          <p class="mt-2 text-base text-primary-50">
+            We'll be on your roof within a few days. No pressure, no sales
+            pitch — just an honest look.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-base font-bold text-primary-700 transition-all hover:-translate-y-0.5 hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/40 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/20"
+          >
+            Use the Form
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
 </Layout>

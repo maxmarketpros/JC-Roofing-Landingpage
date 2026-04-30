@@ -1,16 +1,24 @@
 {
-  "name": "Premier Services",
-  "short_name": "Premier",
-  "description": "Professional service company delivering premium quality work.",
+  "name": "JC Roofing of Texas",
+  "short_name": "JC Roofing",
+  "description": "Fort Worth's third-generation roofing contractor. Re-roofing, replacement, and new roof installation across the DFW metro.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "background_color": "#0a0d0c",
+  "theme_color": "#0a4f39",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/favicon.ico",
       "sizes": "32x32",
       "type": "image/x-icon"
+    },
+    {
+      "src": "/images/logo.webp",
+      "sizes": "180x180",
+      "type": "image/webp",
+      "purpose": "any"
     }
   ]
 }
