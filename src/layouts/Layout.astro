@@ -212,6 +212,27 @@ const websiteSchema = generateWebsiteSchema();
     >
       Skip to main content
     </a>
+    {/*
+      Hidden static fallback form — guarantees Netlify's build-time HTML
+      scanner detects the "quote" form even if the visible form isn't
+      parsed cleanly. Field names must match the visible form exactly.
+      See: https://docs.netlify.com/manage/forms/setup/
+    */}
+    <form
+      name="quote"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+      aria-hidden="true"
+    >
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="details"></textarea>
+      <input name="bot-field" />
+    </form>
+
     <Header />
     <main id="main-content" class="flex-1">
       <span id="top" class="sr-only">Top</span>
