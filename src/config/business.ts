@@ -74,12 +74,9 @@ export const businessConfig = {
   serviceAreasSubtitle:
     "Local crews from our Fort Worth shop — on roofs across Tarrant, Parker, and Johnson Counties.",
 
-  // Service-area Google Maps embed.
-  // NOTE: city-name `q=...&output=embed` URLs return about:blank without an
-  // API key. We need a `pb=` URL grabbed from Google Maps Share → Embed.
-  // Currently using the DFW metro pb URL until a Fort Worth one is provided.
+  // Service-area Google Maps embed — Fort Worth, TX (pb URL from Maps share).
   googleBusinessMapEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1718674.7265533076!2d-99.46147138724612!3d32.718298514969604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e82b81f3a3a2d%3A0x53724d9a808b8ce5!2sDallas-Fort%20Worth%20Metropolitan%20Area%2C%20TX!5e0!3m2!1sen!2sus!4v1777574208276!5m2!1sen!2sus",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d429277.30985828233!2d-97.64660940837456!3d32.79944464047413!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e6e122dc807ad%3A0xa4af8bf8dd69acbd!2sFort%20Worth%2C%20TX!5e0!3m2!1sen!2sus!4v1777578432318!5m2!1sen!2sus",
 
   formEmbedUrl: "",
   formEmbedHeight: "600px",
