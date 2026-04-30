@@ -5,7 +5,7 @@ export const siteConfig = {
   description:
     "Re-roofing, roof replacement, and new roof installation in Fort Worth and the DFW metro. Family-owned since 1996, with 90 years in the trade. Free inspections, licensed & insured.",
   url: "https://jcroofingtexas.com",
-  ogImage: "/images/hero-home.webp",
+  ogImage: "/og-image.png",
   social: {
     facebook: "",
     instagram: "",
