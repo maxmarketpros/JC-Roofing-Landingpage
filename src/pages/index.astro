@@ -50,7 +50,7 @@ const services = [
     blurb:
       "Full tear-off and replacement with premium shingles or metal — built to outlast Texas hail, heat, and wind. Most replacements wrap in 1–2 days.",
     image: "/images/aerial-shingle-home.webp",
-    alt: "Architectural shingle roof replacement on a DFW home",
+    alt: "Architectural shingle roof replacement on a Fort Worth home",
   },
   {
     icon: Hammer,
@@ -64,9 +64,9 @@ const services = [
     icon: Home,
     title: "New Roof Installation",
     blurb:
-      "Building new in DFW? We work with your builder or directly with you to install the right roof system for your design, budget, and HOA.",
+      "Building new in Fort Worth or the surrounding counties? We work with your builder or directly with you to install the right roof system for your design, budget, and HOA.",
     image: "/images/shingle-stone-home.webp",
-    alt: "New roof installation on a stone-front DFW home",
+    alt: "New roof installation on a stone-front Fort Worth home",
   },
   {
     icon: Wrench,
@@ -82,7 +82,7 @@ const services = [
     blurb:
       "Free, honest inspections with photos. Buying, selling, post-storm, or just want to know how much life your roof has left — we'll tell you straight.",
     image: "/images/aerial-residential-metal.webp",
-    alt: "Aerial roof inspection of a DFW residential property",
+    alt: "Aerial roof inspection of a Fort Worth residential property",
   },
   {
     icon: Sparkles,
@@ -151,7 +151,7 @@ const process = [
 const reviews = [
   {
     name: "Daniel Reyes",
-    location: "Keller, TX",
+    location: "Weatherford, TX",
     rating: 5,
     text: "After two hailstorms in three years, I needed a roofer who'd actually call me back. JC came out the next morning, walked me through the insurance side, and had a new roof on the house inside of a week. Zero nails in my driveway when they left.",
     job: "Full roof replacement",
@@ -165,7 +165,7 @@ const reviews = [
   },
   {
     name: "Tom Whitaker",
-    location: "Mansfield, TX",
+    location: "Azle, TX",
     rating: 5,
     text: "Wanted standing seam metal on our new build. They fabricated everything on-site and the seams are dead-straight. You can tell this is a family that's been doing this forever — they care how it looks from the curb.",
     job: "Custom metal roof installation",
@@ -191,7 +191,7 @@ const reviewSchemas = generateReviewSchemas(reviewSchemaInputs);
 const faqs = [
   {
     q: "How long does a full roof replacement take?",
-    a: `Most asphalt shingle replacements in DFW are completed in 1–2 days. Larger homes, complex roofs, and metal jobs run longer — we'll give you an exact timeline in your quote and stick to it.`,
+    a: `Most asphalt shingle replacements in Fort Worth and the surrounding counties are completed in 1–2 days. Larger homes, complex roofs, and metal jobs run longer — we'll give you an exact timeline in your quote and stick to it.`,
   },
   {
     q: "Do you handle insurance claims?",
@@ -270,9 +270,10 @@ const faqs = [
         <p
           class="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-xl"
         >
-          Re-roofing, replacement, and new installs across DFW — built by a
-          third-generation family of roofers with 90 years in the trade. Free
-          inspection. Honest quote. Built once, built right.
+          Re-roofing, replacement, and new installs across Tarrant, Parker
+          and Johnson Counties — built by a third-generation family of
+          roofers with 90 years in the trade. Free inspection. Honest quote.
+          Built once, built right.
         </p>
 
         <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -356,7 +357,7 @@ const faqs = [
         </h2>
         <p class="mt-5 text-lg text-foreground-light">
           Replacement, re-roofing, new installs, repairs, and inspections —
-          residential and commercial — across Fort Worth and the DFW metro.
+          residential and commercial — across Fort Worth, Parker, and Johnson Counties.
         </p>
       </div>
 
@@ -587,7 +588,7 @@ const faqs = [
         <span
           class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
         >
-          What DFW Homeowners Say
+          What Local Homeowners Say
         </span>
         <h2
           class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
@@ -644,8 +645,20 @@ const faqs = [
         </p>
       </div>
 
+      {/* Counties strip */}
+      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+        {
+          businessConfig.serviceAreaCounties.map((county) => (
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-600/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary-100">
+              <MapPin className="h-3.5 w-3.5 text-primary-300" />
+              {county}
+            </span>
+          ))
+        }
+      </div>
+
       <div class="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
-        {/* Cities */}
+        {/* Cities + zip codes */}
         <div
           class="rounded-2xl border border-border bg-surface p-6 md:p-8 lg:col-span-2"
         >
@@ -655,29 +668,41 @@ const faqs = [
             >
               <MapPin className="h-5 w-5" />
             </div>
-            <h3 class="text-lg font-bold text-white">Cities We Serve</h3>
+            <h3 class="text-lg font-bold text-white">Cities & ZIP Codes</h3>
           </div>
 
-          <ul class="mt-5 grid grid-cols-2 gap-2">
+          <ul class="mt-5 space-y-2.5">
             {
               businessConfig.serviceAreaCities.map((city) => (
-                <li class="flex items-center gap-2 rounded-lg bg-background/60 px-3.5 py-2.5 text-sm text-white">
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-primary-300" />
-                  {city.name}
+                <li class="flex items-start gap-3 rounded-lg bg-background/60 px-3.5 py-3">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary-300" />
+                  <div class="flex flex-1 flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span class="text-sm font-semibold text-white">
+                      {city.name}
+                    </span>
+                    <span class="text-[11px] text-muted">{city.county}</span>
+                    <div class="ml-auto flex flex-wrap gap-1">
+                      {city.zips.map((zip) => (
+                        <span class="rounded-md border border-border bg-background/80 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground-light">
+                          {zip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </li>
               ))
             }
           </ul>
 
           <p class="mt-6 text-sm text-foreground-light">
-            Don't see your city?{" "}
+            Just outside our area?{" "}
             <a
               href="#contact"
               class="font-semibold text-primary-300 underline-offset-4 hover:underline"
             >
               Reach out
             </a>
-            {" "}— we cover most of the DFW metroplex.
+            {" "}— we'll let you know if we can help.
           </p>
         </div>
 
@@ -687,7 +712,7 @@ const faqs = [
         >
           <iframe
             src={getMapEmbedUrl()}
-            title="JC Roofing of Texas — Fort Worth office"
+            title="JC Roofing of Texas — Fort Worth"
             loading="lazy"
             class="h-[420px] w-full border-0 lg:h-full lg:min-h-[480px]"
             referrerpolicy="no-referrer-when-downgrade"

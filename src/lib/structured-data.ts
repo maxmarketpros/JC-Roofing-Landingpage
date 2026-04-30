@@ -67,14 +67,21 @@ export function generateLocalBusinessSchema() {
       opens: h.opens,
       closes: h.closes,
     })),
-    areaServed: businessConfig.serviceAreas.map((area) => ({
-      "@type": "City",
-      name: area,
-      containedInPlace: {
+    areaServed: [
+      ...businessConfig.serviceAreas.map((area) => ({
+        "@type": "City",
+        name: area,
+        containedInPlace: {
+          "@type": "State",
+          name: "Texas",
+        },
+      })),
+      ...businessConfig.serviceAreaCounties.map((county) => ({
         "@type": "AdministrativeArea",
-        name: "Dallas-Fort Worth Metroplex",
-      },
-    })),
+        name: county,
+        containedInPlace: { "@type": "State", name: "Texas" },
+      })),
+    ],
     serviceArea: {
       "@type": "GeoCircle",
       geoMidpoint: {

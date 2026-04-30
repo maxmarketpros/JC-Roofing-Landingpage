@@ -16,45 +16,71 @@ export const businessConfig = {
     ],
   },
 
+  // ===== SERVICE AREAS =====
+  // Targeted zip codes grouped by USPS-assigned city.
+  // Used in the Service Area section, footer, and structured data.
+  serviceAreaCities: [
+    {
+      name: "Fort Worth",
+      county: "Tarrant County",
+      zips: ["76108", "76116", "76135", "76179"],
+    },
+    {
+      name: "Azle",
+      county: "Tarrant County",
+      zips: ["76020"],
+    },
+    {
+      name: "Springtown",
+      county: "Parker County",
+      zips: ["76082"],
+    },
+    {
+      name: "Weatherford",
+      county: "Parker County",
+      zips: ["76087"],
+    },
+    {
+      name: "Cresson",
+      county: "Hood / Parker County",
+      zips: ["76035"],
+    },
+    {
+      name: "Godley",
+      county: "Johnson County",
+      zips: ["76044"],
+    },
+    {
+      name: "Joshua",
+      county: "Johnson County",
+      zips: ["76058"],
+    },
+  ],
+
+  // Flat list (used in footer + LocalBusiness schema)
   serviceAreas: [
     "Fort Worth",
-    "Arlington",
-    "Keller",
-    "Bedford",
-    "Hurst",
-    "Euless",
-    "Grapevine",
-    "Mansfield",
-    "Burleson",
-    "North Richland Hills",
-    "Southlake",
-    "Colleyville",
+    "Azle",
+    "Springtown",
+    "Weatherford",
+    "Cresson",
+    "Godley",
+    "Joshua",
   ],
 
-  serviceAreaCities: [
-    { name: "Fort Worth", href: "" },
-    { name: "Arlington", href: "" },
-    { name: "Keller", href: "" },
-    { name: "Bedford", href: "" },
-    { name: "Hurst", href: "" },
-    { name: "Euless", href: "" },
-    { name: "Grapevine", href: "" },
-    { name: "Mansfield", href: "" },
-    { name: "Burleson", href: "" },
-    { name: "North Richland Hills", href: "" },
-    { name: "Southlake", href: "" },
-    { name: "Colleyville", href: "" },
-  ],
+  serviceAreaCounties: ["Tarrant County", "Parker County", "Johnson County"],
 
-  serviceAreasHeading: "Serving Fort Worth & the DFW Metro",
+  serviceAreasHeading: "Serving Fort Worth, Parker & Johnson Counties",
   serviceAreasSubtitle:
-    "Headquartered in Fort Worth, on roofs across Tarrant County and beyond.",
+    "Local crews from our Fort Worth shop — on roofs across Tarrant, Parker, and Johnson Counties.",
 
-  // Service-area map: Google Maps embed of the Dallas–Fort Worth Metropolitan Area.
+  // Service-area Google Maps embed.
+  // NOTE: city-name `q=...&output=embed` URLs return about:blank without an
+  // API key. We need a `pb=` URL grabbed from Google Maps Share → Embed.
+  // Currently using the DFW metro pb URL until a Fort Worth one is provided.
   googleBusinessMapEmbed:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1718674.7265533076!2d-99.46147138724612!3d32.718298514969604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e82b81f3a3a2d%3A0x53724d9a808b8ce5!2sDallas-Fort%20Worth%20Metropolitan%20Area%2C%20TX!5e0!3m2!1sen!2sus!4v1777574208276!5m2!1sen!2sus",
 
-  // Form is a native Netlify form on this LP — no third-party embed
   formEmbedUrl: "",
   formEmbedHeight: "600px",
 
