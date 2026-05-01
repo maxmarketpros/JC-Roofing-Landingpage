@@ -6,6 +6,7 @@ import {
   MapPin,
   Clock,
   CheckCircle2,
+  Shield,
   ShieldCheck,
   Hammer,
   Wrench,
@@ -20,6 +21,11 @@ import {
   HardHat,
   Award,
   Users,
+  Wind,
+  EyeOff,
+  DollarSign,
+  Palette,
+  Sun,
 } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/ui/Container.astro";
@@ -45,10 +51,18 @@ const trustBadges = [
 
 const services = [
   {
+    icon: Sparkles,
+    title: "Custom Metal Roofing",
+    blurb:
+      "Standing seam, R-panel, and custom profiles fabricated on-site at our Fort Worth shop. Save on the middleman, save on insurance, save on cooling.",
+    image: "/images/metal-home-modern.webp",
+    alt: "Modern Texas home with a custom standing-seam metal roof by JC Roofing",
+  },
+  {
     icon: Layers,
     title: "Roof Replacement",
     blurb:
-      "Full tear-off and replacement with premium shingles or metal — built to outlast Texas hail, heat, and wind. Most replacements wrap in 1–2 days.",
+      "Full tear-off and replacement with premium shingles or metal, built to outlast Texas hail, heat, and wind. Most replacements wrap in 1 to 2 days.",
     image: "/images/aerial-shingle-home.webp",
     alt: "Architectural shingle roof replacement on a Fort Worth home",
   },
@@ -57,8 +71,8 @@ const services = [
     title: "Asphalt Shingle Roofing",
     blurb:
       "Architectural and impact-rated asphalt shingles, built for Texas hail and heat. Hundreds of colors, 30-year warranties standard, and a clean install that bumps your curb appeal the day we leave.",
-    image: "/images/slate-shingle-home.webp",
-    alt: "Architectural asphalt shingle roof on a Fort Worth home",
+    image: "/images/asphalt-aerial-home.webp",
+    alt: "Aerial view of an architectural asphalt shingle roof on a Fort Worth home with pool",
   },
   {
     icon: Home,
@@ -72,7 +86,7 @@ const services = [
     icon: Wrench,
     title: "Roof Repair & Leak Fix",
     blurb:
-      "Storm damage, mystery leaks, missing shingles, popped nails — we find the cause, fix it once, and warranty the work. 24/7 emergency response.",
+      "Storm damage, mystery leaks, missing shingles, popped nails. We find the cause, fix it once, and warranty the work. 24/7 emergency response.",
     image: "/images/red-metal-home.webp",
     alt: "Roof repair on a red metal residential roof",
   },
@@ -80,17 +94,83 @@ const services = [
     icon: Search,
     title: "Roof Inspections",
     blurb:
-      "Free, honest inspections with photos. Buying, selling, post-storm, or just want to know how much life your roof has left — we'll tell you straight.",
+      "Free, honest inspections with photos. Buying, selling, post-storm, or just want to know how much life your roof has left? We'll tell you straight.",
     image: "/images/aerial-residential-metal.webp",
     alt: "Aerial roof inspection of a Fort Worth residential property",
   },
+];
+
+const roofTypes = [
+  {
+    title: "Standing Seam Metal",
+    blurb:
+      "Custom-fabricated standing seam panels, cut and rolled in our Fort Worth shop. Hidden fasteners, dead-straight seams, and the kind of curb appeal you can spot from the street.",
+    image: "/images/country-inn-metal.webp",
+    alt: "Standing seam metal roof installed by JC Roofing on a Texas country home",
+  },
+  {
+    title: "Stone Coated Steel (Shake Profile)",
+    blurb:
+      "The look of cedar shake with the toughness of steel. Class 4 hail rating and a 50-year warranty, without the upkeep wood demands.",
+    image: "/images/stone-tile-roof.webp",
+    alt: "Stone coated steel roof in a shake profile on a Fort Worth home",
+  },
+  {
+    title: "Class 4 Shingles",
+    blurb:
+      "Impact-rated asphalt shingles built for Texas hail. Most insurance carriers offer a discount the moment you upgrade.",
+    image: "/images/slate-shingle-home.webp",
+    alt: "Class 4 impact-rated asphalt shingle roof on a Fort Worth home",
+  },
+];
+
+const metalBenefits = [
+  {
+    icon: Shield,
+    title: "Outstanding Durability",
+    description:
+      "Built to outlast 2 to 3 generations of asphalt shingle roofs.",
+  },
+  {
+    icon: Layers,
+    title: "24 & 26 Gauge Steel",
+    description:
+      "Heavy-gauge steel panels that won't dent from minor impacts.",
+  },
+  {
+    icon: Wind,
+    title: "Wind Resistant up to 145 MPH",
+    description: "Engineered to hold against tornado-adjacent gusts.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Hail Resistant, UL2218 Class 4",
+    description: "Top-tier impact rating against Texas hail.",
+  },
+  {
+    icon: EyeOff,
+    title: "Zero Exposed Fasteners",
+    description: "Hidden clip system means no leak points.",
+  },
+  {
+    icon: DollarSign,
+    title: "Homeowners Insurance Discount",
+    description: "Most carriers reduce premiums for Class 4 metal.",
+  },
+  {
+    icon: Palette,
+    title: "Wide Range of Designer Colors",
+    description: "Match any HOA, any architecture.",
+  },
+  {
+    icon: Sun,
+    title: "Energy Efficient",
+    description: "Reflects heat. Lower attic temps, lower cooling bills.",
+  },
   {
     icon: Sparkles,
-    title: "Custom Metal Roofing",
-    blurb:
-      "Standing seam, R-panel, and custom profiles fabricated on-site at our Fort Worth shop. Save on the middleman, save on insurance, save on cooling.",
-    image: "/images/metal-detail.webp",
-    alt: "Close-up of custom standing-seam metal roofing",
+    title: "Virtually Maintenance Free",
+    description: "Wash it off and forget it for 50 years.",
   },
 ];
 
@@ -117,7 +197,7 @@ const reasons = [
     icon: Award,
     title: "Built for Texas weather",
     description:
-      "Hail, 110° summers, and 70 mph wind events are our normal. We spec materials that hold up here — not whatever's cheapest at the supply house.",
+      "Hail, 110° summers, and 70 mph wind events are our normal. We spec materials that hold up here, not whatever's cheapest at the supply house.",
   },
 ];
 
@@ -126,7 +206,7 @@ const process = [
     step: "01",
     title: "Free On-Site Inspection",
     blurb:
-      "We come out, climb up, and document everything with photos. You get a clear written report — no pressure, no sales pitch.",
+      "We come out, climb up, and document everything with photos. You get a clear written report. No pressure, no sales pitch.",
   },
   {
     step: "02",
@@ -160,14 +240,14 @@ const reviews = [
     name: "Marisol Hernández",
     location: "Fort Worth, TX",
     rating: 5,
-    text: "We got three quotes for a re-roof. JC wasn't the cheapest — but they were the only ones who actually got on the roof, took photos, and explained what we were paying for. The crew was respectful, on time, and the workmanship is gorgeous.",
+    text: "We got three quotes for a re-roof. JC wasn't the cheapest, but they were the only ones who actually got on the roof, took photos, and explained what we were paying for. The crew was respectful, on time, and the workmanship is gorgeous.",
     job: "Re-roofing & decking repair",
   },
   {
     name: "Tom Whitaker",
     location: "Azle, TX",
     rating: 5,
-    text: "Wanted standing seam metal on our new build. They fabricated everything on-site and the seams are dead-straight. You can tell this is a family that's been doing this forever — they care how it looks from the curb.",
+    text: "Wanted standing seam metal on our new build. They fabricated everything on-site and the seams are dead-straight. You can tell this is a family that's been doing this forever. They care how it looks from the curb.",
     job: "Custom metal roof installation",
   },
 ];
@@ -191,15 +271,15 @@ const reviewSchemas = generateReviewSchemas(reviewSchemaInputs);
 const faqs = [
   {
     q: "How long does a full roof replacement take?",
-    a: `Most asphalt shingle replacements in Fort Worth and the surrounding counties are completed in 1–2 days. Larger homes, complex roofs, and metal jobs run longer — we'll give you an exact timeline in your quote and stick to it.`,
+    a: `Most asphalt shingle replacements in Fort Worth and the surrounding counties are completed in 1 to 2 days. Larger homes, complex roofs, and metal jobs run longer. We'll give you an exact timeline in your quote and stick to it.`,
   },
   {
     q: "Do you handle insurance claims?",
-    a: `Yes. After a hail or wind event, we'll inspect your roof for free and meet your adjuster on-site. We document everything they need to approve a fair claim — and we never inflate or "find" damage that isn't there.`,
+    a: `Yes. After a hail or wind event, we'll inspect your roof for free and meet your adjuster on-site. We document everything they need to approve a fair claim, and we never inflate or "find" damage that isn't there.`,
   },
   {
     q: "Are you licensed and insured?",
-    a: `Yes — fully licensed in Texas, with general liability and workers' compensation on every crew member. We're happy to send copies before any work starts.`,
+    a: `Yes. Fully licensed in Texas, with general liability and workers' compensation on every crew member. We're happy to send copies before any work starts.`,
   },
   {
     q: "What roofing materials do you install?",
@@ -207,11 +287,11 @@ const faqs = [
   },
   {
     q: "How do I know if I actually need a new roof?",
-    a: `If your roof is over 18–20 years old, has visible hail damage, granule loss, missing shingles, or interior leaks — it's worth a free inspection. We'll give you an honest assessment, including how much life is left, so you don't replace it before you have to.`,
+    a: `If your roof is over 18 to 20 years old, has visible hail damage, granule loss, missing shingles, or interior leaks, it's worth a free inspection. We'll give you an honest assessment, including how much life is left, so you don't replace it before you have to.`,
   },
   {
     q: "Do you offer financing?",
-    a: `Yes — we offer financing options for qualified homeowners so a roof replacement doesn't have to wait. Ask about it during your free quote.`,
+    a: `Yes. We offer financing options for qualified homeowners so a roof replacement doesn't have to wait. Ask about it during your free quote.`,
   },
 ];
 ---
@@ -230,7 +310,7 @@ const faqs = [
     {/* Background */}
     <img
       src="/images/hero-home.webp"
-      alt="JC Roofing project — Texas hill country home with new metal roof"
+      alt="JC Roofing project, Texas hill country home with new metal roof"
       width="1920"
       height="1080"
       class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
@@ -270,10 +350,10 @@ const faqs = [
         <p
           class="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-xl"
         >
-          Re-roofing, replacement, and new installs across Tarrant, Parker
-          and Johnson Counties — built by a third-generation family of
-          roofers with 90 years in the trade. Free inspection. Honest quote.
-          Built once, built right.
+          Re-roofing, replacement, and new installs across Tarrant, Parker,
+          Palo Pinto, Johnson and Wise Counties, built by a third-generation
+          family of roofers with 90 years in the trade. Free inspection.
+          Honest quote. Built once, built right.
         </p>
 
         <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -316,6 +396,37 @@ const faqs = [
     </div>
   </section>
 
+  {/* ============ HERO VIDEO ============ */}
+  <section class="bg-background py-12 md:py-16">
+    <Container>
+      <div class="mx-auto max-w-5xl">
+        <div class="text-center">
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            See Us In Action
+          </span>
+          <h2 class="mt-3 text-balance text-2xl font-bold text-white md:text-3xl">
+            A Quick Look At How We Roof Fort Worth
+          </h2>
+        </div>
+
+        <div
+          class="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+        >
+          <iframe
+            src="https://player.vimeo.com/video/869695216?h=470074f5cb&title=0&byline=0&portrait=0"
+            class="h-full w-full"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            allowfullscreen
+            loading="lazy"
+            title="JC Roofing of Texas, Fort Worth"></iframe>
+        </div>
+      </div>
+    </Container>
+  </section>
+
   {/* ============ STATS / HERITAGE STRIP ============ */}
   <section class="relative border-y border-border bg-surface">
     <Container>
@@ -356,8 +467,9 @@ const faqs = [
           Everything you need under one roof.
         </h2>
         <p class="mt-5 text-lg text-foreground-light">
-          Replacement, re-roofing, new installs, repairs, and inspections —
-          residential and commercial — across Fort Worth, Parker, and Johnson Counties.
+          Replacement, re-roofing, new installs, repairs, and inspections.
+          Residential and commercial across Fort Worth, Parker, Palo Pinto,
+          Johnson, and Wise Counties.
         </p>
       </div>
 
@@ -411,6 +523,56 @@ const faqs = [
           <Phone className="h-5 w-5 text-primary-300" />
           {businessConfig.phone}
         </a>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ TYPES OF ROOFING WE DO ============ */}
+  <section
+    id="roof-types"
+    class="scroll-mt-24 border-y border-border bg-surface"
+  >
+    <Container>
+      <div class="mx-auto max-w-3xl pt-20 text-center md:pt-24">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Roof Systems We Specialize In
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Types of Roofing We Do
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Three roof systems we install most across Fort Worth and the
+          surrounding counties.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 pb-20 md:grid-cols-3 md:pb-24">
+        {
+          roofTypes.map(({ title, blurb, image, alt }) => (
+            <article class="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:border-primary-500 hover:shadow-card-hover">
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={image}
+                  alt={alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent" />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <h3 class="text-xl font-bold text-white">{title}</h3>
+                <p class="mt-3 text-sm leading-relaxed text-foreground-light">
+                  {blurb}
+                </p>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </Container>
   </section>
@@ -513,6 +675,67 @@ const faqs = [
             </a>
           </div>
         </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ METAL ROOFING BENEFITS ============ */}
+  <section
+    id="metal-benefits"
+    class="section-padding scroll-mt-24 border-b border-border"
+  >
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Benefits Of Roofing Panels
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Metal Roofing Benefits
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Why our customers keep choosing metal in Fort Worth.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          metalBenefits.map(({ icon: Icon, title, description }) => (
+            <div class="flex items-start gap-4 rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-primary-500/60">
+              <div class="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                <Icon className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 class="text-base font-semibold text-white md:text-lg">
+                  {title}
+                </h3>
+                <p class="mt-1 text-sm leading-relaxed text-foreground-light">
+                  {description}
+                </p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="#contact"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-md"
+        >
+          Ask About Metal Roofing
+          <ArrowRight className="h-5 w-5" />
+        </a>
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/15 bg-transparent px-7 py-4 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/5"
+        >
+          <Phone className="h-5 w-5 text-primary-300" />
+          {businessConfig.phone}
+        </a>
       </div>
     </Container>
   </section>
@@ -702,7 +925,7 @@ const faqs = [
             >
               Reach out
             </a>
-            {" "}— we'll let you know if we can help.
+            . We'll let you know if we can help.
           </p>
         </div>
 
@@ -712,7 +935,7 @@ const faqs = [
         >
           <iframe
             src={getMapEmbedUrl()}
-            title="JC Roofing of Texas — Fort Worth"
+            title="JC Roofing of Texas, Fort Worth"
             loading="lazy"
             class="h-[420px] w-full border-0 lg:h-full lg:min-h-[480px]"
             referrerpolicy="no-referrer-when-downgrade"
@@ -769,7 +992,7 @@ const faqs = [
           >
             Call {businessConfig.phone}
           </a>
-          {" "}— we'll pick up.
+          . We'll pick up.
         </p>
       </div>
     </Container>
@@ -936,7 +1159,7 @@ const faqs = [
                 id="quote-details"
                 name="details"
                 rows="5"
-                placeholder="Tell us about your roof — any leaks, hail damage, or questions you have…"
+                placeholder="Tell us about your roof. Any leaks, hail damage, or questions you have…"
                 class="w-full resize-y rounded-lg border border-border bg-background px-4 py-3 text-base text-white placeholder:text-muted focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
               ></textarea>
             </div>
@@ -1074,7 +1297,7 @@ const faqs = [
           </h2>
           <p class="mt-2 text-base text-primary-50">
             We'll be on your roof within a few days. No pressure, no sales
-            pitch — just an honest look.
+            pitch, just an honest look.
           </p>
         </div>
         <div class="flex flex-col gap-3 sm:flex-row">

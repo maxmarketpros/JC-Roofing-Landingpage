@@ -68,11 +68,18 @@ export const businessConfig = {
     "Joshua",
   ],
 
-  serviceAreaCounties: ["Tarrant County", "Parker County", "Johnson County"],
+  serviceAreaCounties: [
+    "Tarrant County",
+    "Parker County",
+    "Palo Pinto County",
+    "Johnson County",
+    "Wise County",
+  ],
 
-  serviceAreasHeading: "Serving Fort Worth, Parker & Johnson Counties",
+  serviceAreasHeading:
+    "Serving Fort Worth, Parker, Palo Pinto, Johnson & Wise Counties",
   serviceAreasSubtitle:
-    "Local crews from our Fort Worth shop — on roofs across Tarrant, Parker, and Johnson Counties.",
+    "Local crews from our Fort Worth shop, on roofs across Tarrant, Parker, Palo Pinto, Johnson, and Wise Counties.",
 
   // Service-area Google Maps embed — Fort Worth, TX (pb URL from Maps share).
   googleBusinessMapEmbed:

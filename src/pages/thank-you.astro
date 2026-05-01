@@ -12,7 +12,7 @@ import Container from "@/components/ui/Container.astro";
 import { siteConfig } from "@/config/site";
 import { businessConfig } from "@/config/business";
 
-const title = `Thanks — We Got Your Request | ${siteConfig.name}`;
+const title = `Thanks, We Got Your Request | ${siteConfig.name}`;
 const description = `Your free roof inspection request has been received. A JC Roofing crew member will reach out within one business day.`;
 
 const steps = [
@@ -34,7 +34,7 @@ const steps = [
     icon: ClipboardCheck,
     title: "Honest, Written Quote",
     blurb:
-      "Line-item pricing for materials, labor, and warranty — so you know exactly what you're paying for.",
+      "Line-item pricing for materials, labor, and warranty, so you know exactly what you're paying for.",
     timing: "Same day",
   },
 ];
@@ -74,11 +74,11 @@ const steps = [
         <h1
           class="mt-3 text-balance text-4xl font-bold leading-[1.1] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-5xl md:text-6xl"
         >
-          Thanks —
+          Thanks!
           <span
             class="block bg-gradient-to-r from-primary-200 to-primary-300 bg-clip-text pb-1 text-transparent"
           >
-            we've got it from here.
+            We've got it from here.
           </span>
         </h1>
 
@@ -153,7 +153,7 @@ const steps = [
       >
         <p class="text-sm text-muted">
           A confirmation email is on its way to the address you gave us. If
-          you don't see it in 5 minutes, check your spam folder — or just
+          you don't see it in 5 minutes, check your spam folder, or just
           give us a call at{" "}
           <a
             href={`tel:${businessConfig.phoneRaw}`}
