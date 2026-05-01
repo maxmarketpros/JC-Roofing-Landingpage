@@ -11,6 +11,7 @@
 //          public/og-image.png (1200x630, branded card)
 
 import sharp from "sharp";
+import pngToIco from "png-to-ico";
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -46,6 +47,19 @@ async function makeSquareFavicon(size, outFile) {
 async function makeSvgFavicon() {
   writeFileSync(resolve(publicDir, "favicon.svg"), HOUSE_SVG, "utf8");
   console.log("✓ favicon.svg");
+}
+
+// ---------- favicon.ico — multi-resolution (16, 32, 48) ----------
+async function makeIcoFavicon() {
+  const sizes = [16, 32, 48];
+  const buffers = await Promise.all(
+    sizes.map((s) =>
+      sharp(Buffer.from(HOUSE_SVG)).resize(s, s).png().toBuffer()
+    )
+  );
+  const ico = await pngToIco(buffers);
+  writeFileSync(resolve(publicDir, "favicon.ico"), ico);
+  console.log("✓ favicon.ico (16/32/48 multi-res)");
 }
 
 // ---------- Open Graph card 1200x630 ----------
@@ -138,5 +152,6 @@ await makeSquareFavicon(180, "apple-touch-icon.png");
 await makeSquareFavicon(192, "android-chrome-192x192.png");
 await makeSquareFavicon(512, "android-chrome-512x512.png");
 await makeSvgFavicon();
+await makeIcoFavicon();
 await makeOgImage();
 console.log("\n✓ All assets generated in /public");
