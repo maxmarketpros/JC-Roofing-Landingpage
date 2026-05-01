@@ -1,7 +1,7 @@
 export const businessConfig = {
   phone: "(817) 318-7663",
   phoneRaw: "+18173187663",
-  email: "jcroofingtx@gmail.com",
+  email: "office@jcroofingtexas.com",
   address: {
     street: "3001 Joyce Dr",
     city: "Fort Worth",

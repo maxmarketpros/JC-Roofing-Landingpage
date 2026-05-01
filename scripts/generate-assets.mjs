@@ -24,52 +24,27 @@ const BRAND_GREEN_DARK = "#063125";
 const BG_DARK = "#0a0d0c";
 const LOGO_PATH = resolve(publicDir, "images/logo.webp");
 
-// ---------- Square branded favicon at any size ----------
-async function makeSquareFavicon(size, outFile) {
-  // Logo aspect 649:240. Fit logo into ~78% of canvas.
-  const logoTargetWidth = Math.round(size * 0.78);
-  const logoBuf = await sharp(LOGO_PATH)
-    .resize({ width: logoTargetWidth, withoutEnlargement: false })
-    .png()
-    .toBuffer();
-  const meta = await sharp(logoBuf).metadata();
+// Black house-with-roof silhouette on white. Used for every favicon variant
+// (browser tab + iOS home screen + Android adaptive icon).
+const HOUSE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#ffffff"/>
+  <path d="M32 6 L4 30 L10 30 L10 58 L54 58 L54 30 L60 30 Z" fill="#000000"/>
+  <rect x="27" y="44" width="10" height="14" fill="#ffffff"/>
+</svg>`;
 
-  await sharp({
-    create: {
-      width: size,
-      height: size,
-      channels: 4,
-      background: BRAND_GREEN,
-    },
-  })
-    .composite([
-      {
-        input: logoBuf,
-        top: Math.round((size - meta.height) / 2),
-        left: Math.round((size - meta.width) / 2),
-      },
-    ])
+// ---------- House-icon favicon at any pixel size ----------
+async function makeSquareFavicon(size, outFile) {
+  await sharp(Buffer.from(HOUSE_SVG))
+    .resize(size, size)
     .png()
     .toFile(resolve(publicDir, outFile));
 
   console.log(`✓ ${outFile} (${size}×${size})`);
 }
 
-// ---------- favicon.svg — sharp on any device, modern browsers ----------
+// ---------- favicon.svg — vector copy of the house icon ----------
 async function makeSvgFavicon() {
-  // Embed the rasterized logo as a base64 PNG inside an SVG square.
-  const logoPng = await sharp(LOGO_PATH)
-    .resize({ width: 400, withoutEnlargement: false })
-    .png()
-    .toBuffer();
-  const b64 = logoPng.toString("base64");
-
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="80" fill="${BRAND_GREEN}"/>
-  <image href="data:image/png;base64,${b64}" x="56" y="156" width="400" height="200"/>
-</svg>`;
-
-  writeFileSync(resolve(publicDir, "favicon.svg"), svg, "utf8");
+  writeFileSync(resolve(publicDir, "favicon.svg"), HOUSE_SVG, "utf8");
   console.log("✓ favicon.svg");
 }
 
