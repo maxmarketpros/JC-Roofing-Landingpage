@@ -1,0 +1,470 @@
+---
+import {
+  ArrowRight,
+  Phone,
+  ShieldCheck,
+  Users,
+  HardHat,
+  Award,
+  MapPin,
+  CheckCircle2,
+  Hammer,
+  Layers,
+  Building2,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+import { getMapEmbedUrl } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
+
+const title = `About JC Roofing — 3rd-Generation Roofing Contractor in Fort Worth, TX`;
+const description = `Family-owned roofing contractor serving Fort Worth, TX since 1996, with 90 years in the family trade. GAF, Owens Corning, TAMKO, Fabral & PAC-Clad installs across Tarrant, Parker, Palo Pinto, Johnson, and Wise Counties.`;
+
+const heritageReasons = [
+  {
+    icon: Users,
+    title: "Owner on every job",
+    body: "The owner walks every roof in Fort Worth before the bid and again at the final walkthrough. No layered sales reps, no surprise sub-contracted crews.",
+  },
+  {
+    icon: HardHat,
+    title: "3 generations of roofers",
+    body: "We've been on Texas roofs since 1936. Our crews have learned from people who've seen every kind of failure, fix, and storm this region throws.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Licensed, insured & bonded",
+    body: "Full general-liability coverage and workers' comp on every Fort Worth project — so if something goes sideways, it's our problem, not yours.",
+  },
+  {
+    icon: Award,
+    title: "Comprehensive warranty",
+    body: "Manufacturer materials warranty plus our own workmanship warranty in writing. We don't disappear once the truck pulls out of the driveway.",
+  },
+];
+
+const shingleBrands = [
+  {
+    name: "GAF",
+    blurb:
+      "North America's largest shingle manufacturer. Architectural lines like Timberline HDZ are a staple of Fort Worth roofs we install.",
+  },
+  {
+    name: "Owens Corning",
+    blurb:
+      "Duration series and Class 4 impact-rated shingles we recommend for North Texas hail country.",
+  },
+  {
+    name: "TAMKO",
+    blurb:
+      "Heritage line with strong color matching for HOA-friendly Fort Worth neighborhoods.",
+  },
+];
+
+const metalBrands = [
+  {
+    name: "Fabral",
+    blurb:
+      "Standing seam and exposed-fastener panel profiles we install on Fort Worth-area homes and barns.",
+  },
+  {
+    name: "PAC-Clad / Petersen Aluminum",
+    blurb:
+      "Premium architectural metal — Snap-Clad, Tite-Loc, and Redi-Roof — for the highest-end Fort Worth metal installs.",
+  },
+];
+
+const stoneCoatedBrands = [
+  {
+    name: "Westlake (formerly Boral)",
+    blurb:
+      "Stone-coated steel in shake, shingle, and tile profiles. The look of cedar with the toughness of steel.",
+  },
+  {
+    name: "Tilcor",
+    blurb:
+      "Stone-coated steel with a 50-year warranty and Class 4 hail rating — popular on Fort Worth homes with HOA tile requirements.",
+  },
+  {
+    name: "Tefute",
+    blurb:
+      "Specialty stone-coated profiles we install across Tarrant and Parker Counties.",
+  },
+];
+
+const stats = [
+  { value: "30+", label: "Years as JC Roofing" },
+  { value: "90", label: "Years family in the trade" },
+  { value: "3", label: "Generations of roofers" },
+  { value: "24/7", label: "Emergency response" },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+]);
+
+const aboutPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  url: `${siteConfig.url}/about`,
+  name: title,
+  description,
+  isPartOf: { "@id": `${siteConfig.url}/#website` },
+  about: { "@id": `${siteConfig.url}/#business` },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="About JC Roofing — 3rd-Generation Roofers in Fort Worth, TX"
+  preloadImage="/images/country-inn-metal.webp"
+>
+  <PageHero
+    eyebrow="About JC Roofing"
+    heading="A 3rd-Generation Roofing Contractor Serving Fort Worth, TX"
+    subtitle="Family-owned since 1996, with 90 years of trade history behind every nail. We've spent three generations learning how Fort Worth roofs fail — so yours doesn't."
+    image="/images/country-inn-metal.webp"
+    imageAlt="Standing seam metal roof on a country home outside Fort Worth, TX"
+    ctaLabel="Get a Free Roof Quote"
+  />
+
+  {/* ============ HERITAGE STORY ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Our Story
+          </span>
+          <h2
+            class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+          >
+            Family in the Texas Roofing Trade Since 1936
+          </h2>
+          <div class="mt-6 space-y-5 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              JC Roofing has been a Fort Worth, TX fixture since 1996, but the
+              roofing story in our family goes back almost a century. Our
+              grandparents started hanging shingles in Texas in 1936. Our
+              parents grew up on a ladder. We grew up on a ladder. And now the
+              third generation runs the trucks across Tarrant, Parker, Palo
+              Pinto, Johnson, and Wise Counties.
+            </p>
+            <p>
+              That kind of continuity matters. The same family has seen Fort
+              Worth roofs through ice storms, hailstorms, 110° summers, and
+              every shift in building code and shingle technology along the
+              way. We've watched products fail. We've watched products last.
+              We bring that knowledge to every Fort Worth, TX roof bid.
+            </p>
+            <p>
+              We're licensed, insured, and bonded — and we still answer the
+              phone ourselves. If your call gets dropped to voicemail outside
+              hours, you can bet it's getting returned the next morning by the
+              owner who'd be running your job.
+            </p>
+          </div>
+        </div>
+        <div class="relative">
+          <img
+            src="/images/metal-panel-postcard.webp"
+            alt="JC Roofing direct-mail piece showing benefits of standing seam roofing panels — 24/26 gauge steel, wind rated to 145 mph, Class 4 hail rated"
+            width="1200"
+            height="900"
+            class="rounded-2xl border border-border shadow-2xl"
+            loading="lazy"
+            decoding="async"
+          />
+          <div
+            class="pointer-events-none absolute -bottom-6 -left-6 rounded-xl border border-primary-400/30 bg-primary-600/15 px-5 py-3 text-sm font-semibold uppercase tracking-wider text-primary-100 backdrop-blur-md"
+          >
+            Family Trade Since 1936
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ WHY JC ============ */}
+  <section class="border-t border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Why Fort Worth Trusts Us
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          The JC Roofing Difference in Fort Worth, TX
+        </h2>
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {
+          heritageReasons.map((reason) => (
+            <div class="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur-sm md:p-8">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300">
+                <reason.icon className="h-6 w-6" />
+              </div>
+              <h3 class="mt-5 text-xl font-bold text-white">{reason.title}</h3>
+              <p class="mt-2 leading-relaxed text-foreground-light">
+                {reason.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ STATS ============ */}
+  <section class="border-y border-border bg-background">
+    <Container>
+      <div class="grid grid-cols-2 gap-6 py-12 lg:grid-cols-4">
+        {
+          stats.map((s) => (
+            <div class="text-center">
+              <div class="text-4xl font-extrabold text-primary-300 md:text-5xl">
+                {s.value}
+              </div>
+              <div class="mt-2 text-sm font-medium uppercase tracking-wider text-foreground-light">
+                {s.label}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ BRAND PARTNERS / MATERIALS ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Materials & Brand Partners
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          The Brands We Install Across Fort Worth, TX
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          We're not married to one manufacturer. We pick the right material for
+          your Fort Worth home, your budget, and the specific failure mode the
+          old roof is showing.
+        </p>
+      </div>
+
+      {/* Shingle */}
+      <div class="mt-14">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+          >
+            <Hammer className="h-5 w-5" />
+          </div>
+          <h3 class="text-2xl font-bold text-white">
+            Asphalt Shingle Partners
+          </h3>
+        </div>
+        <div class="mt-6 grid gap-5 md:grid-cols-3">
+          {
+            shingleBrands.map((b) => (
+              <div class="rounded-2xl border border-border bg-surface p-6">
+                <p class="text-lg font-bold text-white">{b.name}</p>
+                <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                  {b.blurb}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Metal */}
+      <div class="mt-12">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+          >
+            <Building2 className="h-5 w-5" />
+          </div>
+          <h3 class="text-2xl font-bold text-white">Metal Roofing Partners</h3>
+        </div>
+        <div class="mt-6 grid gap-5 md:grid-cols-2">
+          {
+            metalBrands.map((b) => (
+              <div class="rounded-2xl border border-border bg-surface p-6">
+                <p class="text-lg font-bold text-white">{b.name}</p>
+                <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                  {b.blurb}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      {/* Stone-coated steel */}
+      <div class="mt-12">
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300"
+          >
+            <Layers className="h-5 w-5" />
+          </div>
+          <h3 class="text-2xl font-bold text-white">
+            Stone-Coated Steel Partners
+          </h3>
+        </div>
+        <div class="mt-6 grid gap-5 md:grid-cols-3">
+          {
+            stoneCoatedBrands.map((b) => (
+              <div class="rounded-2xl border border-border bg-surface p-6">
+                <p class="text-lg font-bold text-white">{b.name}</p>
+                <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                  {b.blurb}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mt-12 flex flex-wrap justify-center gap-3">
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+        >
+          Ask Which Brand Fits Your Roof
+          <ArrowRight className="h-5 w-5" />
+        </a>
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/20 bg-white/5 px-7 py-4 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+        >
+          <Phone className="h-5 w-5" />
+          {businessConfig.phone}
+        </a>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SERVICE AREA ============ */}
+  <section
+    id="service-area"
+    class="scroll-mt-24 border-t border-border bg-surface section-padding"
+  >
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Where We Work
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Fort Worth & the Surrounding Counties We Serve
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Local crews from our Fort Worth, TX office, on roofs across Tarrant,
+          Parker, Palo Pinto, Johnson, and Wise Counties.
+        </p>
+      </div>
+
+      {/* Counties strip */}
+      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+        {
+          businessConfig.serviceAreaCounties.map((county) => (
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-600/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary-100">
+              <MapPin className="h-3.5 w-3.5 text-primary-300" />
+              {county}
+            </span>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
+        {/* Cities + zip codes */}
+        <div
+          class="rounded-2xl border border-border bg-background/60 p-6 md:p-8 lg:col-span-2"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <MapPin className="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-white">Cities & ZIP Codes</h3>
+          </div>
+
+          <ul class="mt-5 space-y-2.5">
+            {
+              businessConfig.serviceAreaCities.map((city) => (
+                <li class="flex items-start gap-3 rounded-lg bg-background/60 px-3.5 py-3">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary-300" />
+                  <div class="flex flex-1 flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span class="text-sm font-semibold text-white">
+                      {city.name}
+                    </span>
+                    <span class="text-[11px] text-muted">{city.county}</span>
+                    <div class="ml-auto flex flex-wrap gap-1">
+                      {city.zips.map((zip) => (
+                        <span class="rounded-md border border-border bg-background/80 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground-light">
+                          {zip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        {/* Map */}
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-background lg:col-span-3"
+        >
+          <iframe
+            src={getMapEmbedUrl()}
+            title="JC Roofing, Fort Worth TX"
+            loading="lazy"
+            class="h-[420px] w-full border-0 lg:h-full lg:min-h-[480px]"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <ContactSection />
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(aboutPageSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+</Layout>

@@ -1,36 +1,46 @@
 import type { NavItem, FooterGroup } from "@/types";
 
-// 1-page landing nav — anchors only
+// Multi-page nav — routes for full pages, anchors only for in-page jumps
 export const mainNav: NavItem[] = [
-  { label: "Services", href: "#services" },
-  { label: "Why JC", href: "#why-jc" },
-  { label: "Process", href: "#process" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Service Area", href: "#service-area" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  {
+    label: "Services",
+    href: "/services/metal-roofing",
+    children: [
+      { label: "Metal Roofing", href: "/services/metal-roofing" },
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/services/asphalt-shingle-roofing",
+      },
+      { label: "Roof Replacement", href: "/services/roof-replacement" },
+      { label: "Roof Repair", href: "/services/roof-repair" },
+    ],
+  },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const footerGroups: FooterGroup[] = [
   {
     title: "Services",
     links: [
-      { label: "Re-Roofing", href: "#services" },
-      { label: "Roof Replacement", href: "#services" },
-      { label: "New Roof Installation", href: "#services" },
-      { label: "Roof Repair", href: "#services" },
-      { label: "Metal Roofing", href: "#services" },
-      { label: "Free Inspections", href: "#contact" },
+      { label: "Metal Roofing", href: "/services/metal-roofing" },
+      {
+        label: "Asphalt Shingle Roofing",
+        href: "/services/asphalt-shingle-roofing",
+      },
+      { label: "Roof Replacement", href: "/services/roof-replacement" },
+      { label: "Roof Repair", href: "/services/roof-repair" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Why JC Roofing", href: "#why-jc" },
-      { label: "Our Process", href: "#process" },
-      { label: "Reviews", href: "#reviews" },
-      { label: "Service Area", href: "#service-area" },
-      { label: "FAQ", href: "#faq" },
-      { label: "Get a Quote", href: "#contact" },
+      { label: "Home", href: "/" },
+      { label: "About JC Roofing", href: "/about" },
+      { label: "Service Area", href: "/about#service-area" },
+      { label: "Contact", href: "/contact" },
+      { label: "Get a Free Quote", href: "/contact#quote" },
     ],
   },
 ];

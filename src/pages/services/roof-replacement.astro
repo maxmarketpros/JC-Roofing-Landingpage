@@ -1,0 +1,551 @@
+---
+import {
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  AlertTriangle,
+  ChevronDown,
+  Search,
+  ClipboardCheck,
+  Hammer,
+  HardHat,
+  Layers,
+  Sparkles,
+  Home,
+  Shield,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { businessConfig } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
+
+const title = `Roof Replacement in Fort Worth, TX — Free Inspection | JC Roofing`;
+const description = `Full roof replacement in Fort Worth, TX. Shingle, metal, stone-coated steel, and tile tear-offs handled by an owner-led 3rd-generation crew. Insurance claim help, free on-site inspection. Call ${businessConfig.phone}.`;
+
+const signs = [
+  "Granules accumulating in your gutters or splashing out of downspouts",
+  "Visible daylight in the attic where the decking should be solid",
+  "Curling, cupping, or missing shingles across multiple slopes",
+  "Repeat leaks — especially in the same spot after every storm",
+  "Roof is 20+ years old (most Fort Worth shingle roofs hit end-of-life around year 18–25)",
+  "Recent hailstorm and your insurance adjuster is recommending replacement",
+  "Sagging ridge line or visible dips in the roof deck",
+  "Algae streaks, moss, or staining that returns after cleaning",
+];
+
+const processSteps = [
+  {
+    n: "01",
+    icon: Search,
+    title: "Free On-Site Roof Inspection",
+    body: "We walk your Fort Worth, TX roof, climb the attic if needed, photograph every issue, and tell you straight whether you actually need replacement or just a targeted repair.",
+  },
+  {
+    n: "02",
+    icon: ClipboardCheck,
+    title: "Detailed Written Estimate",
+    body: "Line-item bid covering tear-off, decking repair allowance, underlayment, flashing, ventilation, ridge, drip edge, and disposal. Nothing buried, nothing 'TBD.'",
+  },
+  {
+    n: "03",
+    icon: Sparkles,
+    title: "Material & Color Selection",
+    body: "We bring sample boards to your Fort Worth home so you're matching the actual product to your actual brick, stone, and trim — not guessing from a phone.",
+  },
+  {
+    n: "04",
+    icon: Hammer,
+    title: "Tear-Off & Install",
+    body: "Full removal, decking inspection, replacement of any rotted plywood, fresh synthetic underlayment, and clean install. Most Fort Worth shingle replacements wrap in 1–2 days; metal takes 3–5.",
+  },
+  {
+    n: "05",
+    icon: HardHat,
+    title: "Final Walkthrough + Warranty",
+    body: "Owner-led walkthrough, magnetic nail sweep of your Fort Worth driveway and yard, and your warranty paperwork — manufacturer and JC workmanship — handed to you in writing.",
+  },
+];
+
+const materials = [
+  {
+    icon: Hammer,
+    title: "Asphalt Shingle Replacement",
+    body: "The most common roof we replace in Fort Worth, TX. Architectural and Class 4 impact-rated lines from GAF, Owens Corning, and TAMKO.",
+    href: "/services/asphalt-shingle-roofing",
+    image: "/images/aerial-shingle-home.webp",
+    alt: "Asphalt shingle roof replacement on a Fort Worth, TX home",
+  },
+  {
+    icon: Sparkles,
+    title: "Metal Roof Replacement",
+    body: "Standing seam and stone-coated steel — the longest-lasting replacement option in Fort Worth's hail climate. 40–60 year lifespan, Class 4 hail rating.",
+    href: "/services/metal-roofing",
+    image: "/images/metal-home-modern.webp",
+    alt: "Metal roof replacement on a modern Fort Worth, TX home",
+  },
+  {
+    icon: Layers,
+    title: "Stone-Coated Steel Replacement",
+    body: "The look of cedar shake or clay tile with the toughness of steel. Class 4 hail rated with up to a 50-year warranty.",
+    href: "/services/metal-roofing",
+    image: "/images/stone-coated-shake.webp",
+    alt: "Stone-coated steel roof replacement in shake profile on a Fort Worth home",
+  },
+  {
+    icon: Home,
+    title: "Tile Roof Replacement",
+    body: "We work with concrete and clay tile profiles on Fort Worth, TX homes — whether you're keeping tile or moving to a lighter-weight steel alternative.",
+    href: "/contact",
+    image: "/images/stone-tile-roof.webp",
+    alt: "Tile roof replacement on a Fort Worth, TX home",
+  },
+];
+
+const faqs = [
+  {
+    q: "How long does a roof replacement take in Fort Worth, TX?",
+    a: "Most Fort Worth, TX shingle replacements wrap in 1–2 days for an average-size single-family home. Metal roofs (standing seam in particular) take 3–5 days because the panels are typically fabricated to the exact roof dimensions. Stone-coated steel and tile roofs run 3–7 days depending on complexity. We give you a real start-to-finish date in the written estimate.",
+  },
+  {
+    q: "What does a roof replacement cost in Fort Worth?",
+    a: "Fort Worth shingle replacements typically run from the mid-teens to the mid-twenties of thousands for a standard single-family home, depending on square footage, pitch, layers being removed, decking repair needs, and material grade. Class 4 impact-rated shingles add a modest premium that's often offset by the insurance discount. Metal and stone-coated steel are roughly 1.5×–2.5× the cost of comparable shingle. We put it all in writing before any work starts.",
+  },
+  {
+    q: "Do you offer financing for roof replacement in Fort Worth?",
+    a: "Yes — we work with financing partners for Fort Worth-area homeowners who'd rather not pay the full replacement out of pocket. Terms vary, and we'll walk you through the options on the estimate visit so you can decide whether financing makes sense for your situation.",
+  },
+  {
+    q: "Will my homeowners insurance cover the Fort Worth roof replacement?",
+    a: "If the replacement is driven by hail or wind damage, usually yes. Most homeowners policies in Fort Worth, TX cover storm damage subject to your deductible. We handle insurance documentation properly — date-stamped roof photos, written hail-strike reports, and direct coordination with your adjuster. If the roof is simply at end-of-life from age, that's an out-of-pocket replacement.",
+  },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services/metal-roofing" },
+  { name: "Roof Replacement", href: "/services/roof-replacement" },
+]);
+
+const serviceSchema = generateServiceSchema({
+  name: "Roof Replacement in Fort Worth, TX",
+  description,
+  serviceType: "Roof Replacement",
+  url: "/services/roof-replacement",
+  image: "/images/aerial-shingle-estate.webp",
+});
+
+const faqSchema = generateFAQSchema(
+  faqs.map((f, i) => ({ id: `replacement-${i}`, question: f.q, answer: f.a }))
+);
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="Roof Replacement in Fort Worth, TX | JC Roofing"
+  preloadImage="/images/aerial-shingle-estate.webp"
+>
+  <PageHero
+    eyebrow="Roof Replacement"
+    heading="Roof Replacement in Fort Worth, TX"
+    subtitle="Owner-led, 3rd-generation crews replacing shingle, metal, stone-coated steel, and tile roofs across Tarrant, Parker, Palo Pinto, Johnson, and Wise Counties. Free on-site inspection, written estimate, insurance claim help."
+    image="/images/aerial-shingle-estate.webp"
+    imageAlt="Aerial view of a Fort Worth, TX estate after roof replacement"
+    ctaLabel="Schedule My Free Roof Inspection"
+  />
+
+  {/* ============ INTRO ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-4xl">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          When Replacement Is the Right Call
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+        >
+          Full Roof Replacement in Fort Worth, TX — Done Once, Done Right
+        </h2>
+        <div class="mt-6 space-y-5 text-base leading-relaxed text-foreground-light md:text-lg">
+          <p>
+            Not every Fort Worth, TX roof needs replacement. Plenty of the
+            roofs we look at across Tarrant and Parker Counties can be repaired
+            for a fraction of replacement cost. We'll tell you that
+            up-front — we don't sell replacements we don't believe in.
+          </p>
+          <p>
+            But when a roof is genuinely at end-of-life — whether from age,
+            cumulative hail damage, or a single storm event — replacing it
+            now beats patching for another two years and then replacing
+            anyway. A failing Fort Worth roof can drag in attic moisture,
+            ruin insulation, stain ceilings, and put your sheetrock and
+            framing at risk.
+          </p>
+          <p>
+            JC Roofing has replaced roofs in Fort Worth, Azle, Springtown,
+            Weatherford, Cresson, Godley, and Joshua for 30 years. The
+            family's been on Texas roofs since 1936. We bring sample boards
+            to your house, we put every line item in writing, and we let you
+            see exactly what's under the shingles before we close up the deck.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SIGNS ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Warning Signs
+          </span>
+          <h2
+            class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+          >
+            Signs Your Fort Worth Roof Needs Replacing
+          </h2>
+          <p class="mt-5 text-base leading-relaxed text-foreground-light md:text-lg">
+            Any one of these on its own might just mean a repair. But if
+            you're nodding to three or more on your Fort Worth, TX roof,
+            it's time for an inspection.
+          </p>
+          <ul class="mt-7 space-y-3">
+            {
+              signs.map((s) => (
+                <li class="flex items-start gap-3 rounded-lg bg-background/60 px-4 py-3">
+                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+                  <span class="text-foreground-light">{s}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <img
+          src="/images/aerial-shingle-home.webp"
+          alt="Aerial view of an aging Fort Worth, TX shingle roof being scoped for replacement"
+          width="1200"
+          height="1500"
+          class="h-full w-full rounded-2xl border border-border object-cover shadow-2xl"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ PROCESS ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Our Process
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          The JC Roof Replacement Process in Fort Worth
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+        {
+          processSteps.map((s) => (
+            <div class="rounded-2xl border border-border bg-surface p-6">
+              <div class="text-3xl font-extrabold text-primary-300/70">
+                {s.n}
+              </div>
+              <div class="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                <s.icon className="h-5 w-5" />
+              </div>
+              <h3 class="mt-4 text-base font-bold text-white">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                {s.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ MATERIAL OPTIONS ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Material Options
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Replacement Roof Material Options for Fort Worth Homes
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          The right material depends on your Fort Worth home, your HOA, your
+          budget, and how long you plan to stay. We'll walk through each
+          option on the inspection visit.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {
+          materials.map((m) => (
+            <a
+              href={m.href}
+              class="group flex flex-col overflow-hidden rounded-2xl border border-border bg-background/60 transition-all hover:-translate-y-0.5 hover:border-primary-400/50"
+            >
+              <img
+                src={m.image}
+                alt={m.alt}
+                width="1200"
+                height="800"
+                class="aspect-[16/10] w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="flex flex-1 flex-col p-6">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                  <m.icon className="h-5 w-5" />
+                </div>
+                <h3 class="mt-4 text-lg font-bold text-white">{m.title}</h3>
+                <p class="mt-2 flex-1 text-sm leading-relaxed text-foreground-light">
+                  {m.body}
+                </p>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-300 group-hover:underline">
+                  Learn more
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ INSURANCE CLAIM ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Insurance Claims
+          </span>
+          <h2
+            class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl"
+          >
+            Working With Insurance on Your Fort Worth Roof Replacement
+          </h2>
+          <div class="mt-5 space-y-4 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              The majority of Fort Worth roof replacements we do come out of a
+              hail event. Insurance carriers in North Texas are well-versed in
+              storm-damage claims, but you still need a contractor who can
+              document the damage properly — and who'll meet your adjuster on
+              the roof.
+            </p>
+            <p>
+              We provide date-stamped roof photos, written hail-strike reports
+              with measurements, and we'll be there with your Fort Worth-area
+              adjuster to make sure nothing legitimate gets missed. We don't
+              do "we'll cover your deductible" gimmicks. They're illegal in
+              Texas, and any contractor offering that is a contractor you
+              don't want.
+            </p>
+            <p>
+              Once the claim is approved, we replace your roof to the spec the
+              insurance company funded — or upgrade you on the line items that
+              make sense (impact-rated shingles, premium underlayment) at
+              your option.
+            </p>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+            >
+              Start an Insurance Inspection
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <a
+              href={`tel:${businessConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 rounded-lg border-2 border-white/20 bg-white/5 px-6 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+            >
+              <Phone className="h-5 w-5" />
+              {businessConfig.phone}
+            </a>
+          </div>
+        </div>
+        <div class="grid gap-4 rounded-2xl border border-border bg-surface p-6 md:p-8">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+            >
+              <Shield className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">
+                Documented hail strike reports
+              </h3>
+              <p class="mt-1 text-sm leading-relaxed text-foreground-light">
+                Measurements, dates, photo evidence — formatted the way
+                insurance carriers expect for Fort Worth-area claims.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+            >
+              <CheckCircle2 className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">
+                Meet your adjuster on the roof
+              </h3>
+              <p class="mt-1 text-sm leading-relaxed text-foreground-light">
+                We coordinate directly with your insurance adjuster — no
+                back-and-forth phone tag, no missed damage.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+            >
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-white">
+                Optional upgrades on approval
+              </h3>
+              <p class="mt-1 text-sm leading-relaxed text-foreground-light">
+                Move from standard architectural to Class 4 impact-rated
+                shingles, or step up to metal — at your option and at the
+                actual price difference.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ MID-PAGE CTA BANNER ============ */}
+  <section class="relative overflow-hidden bg-primary-700">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600"
+    >
+    </div>
+    <Container class="relative">
+      <div
+        class="flex flex-col items-center justify-between gap-6 py-12 text-center md:flex-row md:py-14 md:text-left"
+      >
+        <div>
+          <h2 class="text-balance text-2xl font-bold text-white md:text-3xl">
+            Free Roof Replacement Inspection in Fort Worth, TX
+          </h2>
+          <p class="mt-2 text-base text-primary-50">
+            Most inspections get scheduled within 24 hours. No pressure, no
+            sales pitch — just an honest look at what your roof actually
+            needs.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-base font-bold text-primary-700 transition-all hover:-translate-y-0.5 hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/40 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/20"
+          >
+            Request the Inspection
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          FAQ
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Roof Replacement FAQs — Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-surface backdrop-blur-sm"
+        >
+          {
+            faqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <ContactSection
+    heading="Get Your Fort Worth Roof Replacement Quote"
+    subtitle="Tell us about your home and what's prompting the replacement — age, hail, leaks. We'll schedule a free on-site inspection within 24 hours."
+  />
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
+</Layout>

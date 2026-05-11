@@ -1,111 +1,94 @@
 ---
-import { ChevronRight, ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import Container from "@/components/ui/Container.astro";
-import Button from "@/components/ui/Button.astro";
-import ImageSlot from "@/components/ui/ImageSlot.astro";
-import { cn } from "@/lib/utils";
-
-interface BreadcrumbItem {
-  label: string;
-  href?: string;
-}
+import { businessConfig } from "@/config/business";
 
 interface Props {
+  eyebrow?: string;
+  /** H1 text. Should always include focus keyword + "Fort Worth, TX". */
   heading: string;
   subtitle?: string;
-  imageKey: string;
-  breadcrumbs?: BreadcrumbItem[];
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
-  class?: string;
+  /** Root-relative path to the background image, e.g. /images/metal-country-home.webp */
+  image: string;
+  imageAlt?: string;
+  /** Primary CTA href; defaults to /contact */
+  ctaHref?: string;
+  ctaLabel?: string;
 }
 
 const {
+  eyebrow,
   heading,
   subtitle,
-  imageKey,
-  breadcrumbs,
-  primaryCta,
-  secondaryCta,
-  class: className,
+  image,
+  imageAlt = "",
+  ctaHref = "/contact",
+  ctaLabel = "Get My Free Quote",
 } = Astro.props as Props;
 ---
 
-<section
-  class={cn(
-    "relative flex items-center pt-20",
-    "min-h-[320px] md:min-h-[380px]",
-    className,
-  )}
->
-  {/* Background */}
-  <ImageSlot
-    imageKey={imageKey}
-    fill
-    priority
-    class="absolute inset-0 z-0"
-    overlayClassName="bg-gradient-to-r from-foreground/80 to-foreground/60"
-    sizes="100vw"
+<section class="relative isolate overflow-hidden">
+  {/* Background image */}
+  <img
+    src={image}
+    alt={imageAlt}
+    width="1920"
+    height="1080"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
   />
+  {/* Gradient overlays for legibility */}
+  <div
+    class="absolute inset-0 -z-10 bg-gradient-to-b from-black/70 via-black/55 to-black/85"
+  >
+  </div>
+  <div
+    class="absolute inset-0 -z-10 bg-gradient-to-r from-black/65 via-transparent to-transparent"
+  >
+  </div>
 
-  {/* Content */}
-  <Container class="relative z-10 py-16 md:py-20">
-    {
-      breadcrumbs && breadcrumbs.length > 0 && (
-        <nav class="mb-4 flex items-center gap-1.5 text-sm text-white/60">
-          {breadcrumbs.map((crumb, i) => (
-            <span class="flex items-center gap-1.5">
-              {i > 0 && <ChevronRight className="h-3.5 w-3.5" />}
-              {crumb.href ? (
-                <a
-                  href={crumb.href}
-                  class="transition-colors hover:text-white"
-                >
-                  {crumb.label}
-                </a>
-              ) : (
-                <span class="text-white">{crumb.label}</span>
-              )}
+  <Container>
+    <div class="flex min-h-[72vh] flex-col justify-center py-28 md:min-h-[68vh] md:py-32 lg:py-36">
+      <div class="max-w-3xl">
+        {
+          eyebrow && (
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-600/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-primary-100">
+              {eyebrow}
             </span>
-          ))}
-        </nav>
-      )
-    }
+          )
+        }
+        <h1
+          class="mt-5 text-balance text-4xl font-extrabold leading-tight text-white sm:text-5xl md:text-6xl"
+        >
+          {heading}
+        </h1>
+        {
+          subtitle && (
+            <p class="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-light md:text-xl">
+              {subtitle}
+            </p>
+          )
+        }
 
-    <h1
-      class="max-w-3xl text-3xl font-bold text-white md:text-4xl lg:text-5xl"
-    >
-      {heading}
-    </h1>
-
-    {
-      subtitle && (
-        <p class="mt-4 max-w-xl text-lg text-white/80">{subtitle}</p>
-      )
-    }
-
-    {
-      (primaryCta || secondaryCta) && (
-        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-          {primaryCta && (
-            <Button href={primaryCta.href} size="lg">
-              {primaryCta.label}
-              <ArrowRight slot="icon" className="h-5 w-5" />
-            </Button>
-          )}
-          {secondaryCta && (
-            <Button
-              href={secondaryCta.href}
-              variant="outline"
-              size="lg"
-              class="border-white text-white hover:bg-white hover:text-foreground"
-            >
-              {secondaryCta.label}
-              <Phone slot="icon" className="h-5 w-5" />
-            </Button>
-          )}
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href={ctaHref}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-7 py-4 text-base font-semibold text-white shadow-glow transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+          >
+            {ctaLabel}
+            <ArrowRight className="h-5 w-5" />
+          </a>
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 bg-white/5 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
         </div>
-      )
-    }
+      </div>
+    </div>
   </Container>
 </section>

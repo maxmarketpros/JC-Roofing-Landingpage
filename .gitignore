@@ -10,3 +10,6 @@ Thumbs.db
 
 # Claude Code local user settings (keep launch.json for dev server config)
 .claude/settings.local.json
+
+# Raw client photo source files (optimized WebP versions live in public/images/)
+photos-from-email/

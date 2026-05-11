@@ -151,10 +151,14 @@ export interface ServiceSchemaInput {
   name: string;
   description: string;
   serviceType?: string;
+  /** Absolute or root-relative path; will be promoted to the schema's url field */
+  url?: string;
+  /** Root-relative image path */
+  image?: string;
 }
 
 export function generateServiceSchema(input: ServiceSchemaInput) {
-  return {
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: input.name,
@@ -164,8 +168,12 @@ export function generateServiceSchema(input: ServiceSchemaInput) {
     areaServed: businessConfig.serviceAreas.map((area) => ({
       "@type": "City",
       name: area,
+      containedInPlace: { "@type": "State", name: "Texas" },
     })),
   };
+  if (input.url) schema.url = `${siteConfig.url}${input.url}`;
+  if (input.image) schema.image = `${siteConfig.url}${input.image}`;
+  return schema;
 }
 
 /**

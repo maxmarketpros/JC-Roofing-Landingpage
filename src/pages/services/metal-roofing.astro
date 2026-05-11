@@ -1,0 +1,547 @@
+---
+import {
+  ArrowRight,
+  Phone,
+  Shield,
+  Wind,
+  Sun,
+  DollarSign,
+  Palette,
+  VolumeX,
+  EyeOff,
+  Award,
+  CheckCircle2,
+  ChevronDown,
+  Search,
+  Hammer,
+  ClipboardCheck,
+  HardHat,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
+
+const title = `Metal Roofing in Fort Worth, TX — Standing Seam & Stone-Coated Steel | JC Roofing`;
+const description = `Custom metal roofing in Fort Worth, TX. Standing seam, stone-coated steel, and metal shake panels — 24 & 26 gauge steel, wind rated to 145 mph, Class 4 hail rated. Call ${businessConfig.phone} for a free metal roof quote.`;
+
+const panelOptions = [
+  {
+    title: "Standing Seam Metal in Fort Worth, TX",
+    image: "/images/metal-detail.webp",
+    alt: "Close-up of a standing seam metal roof installed in Fort Worth, TX",
+    body: "The flagship of Fort Worth metal roofing. Vertical interlocking panels with hidden fasteners — nothing exposed on the surface to leak, rust, or back out over time. Custom-fabricated on-site at our Fort Worth shop in your choice of profile, color, and gauge.",
+    specs: [
+      "24 & 26 gauge steel",
+      "Wind rated up to 145 mph",
+      "Class 4 hail rated (UP2218)",
+      "Zero exposed fasteners",
+    ],
+  },
+  {
+    title: "Stone-Coated Steel in Fort Worth, TX",
+    image: "/images/stone-coated-shake.webp",
+    alt: "Stone-coated steel metal roof in a shake profile on a Fort Worth, TX home",
+    body: "The look of cedar shake or clay tile with the durability of steel. Stone-coated steel is the right call for Fort Worth homeowners in HOAs that require tile or shake profiles but want hail protection a wood or clay roof can't match.",
+    specs: [
+      "Shake, shingle, and tile profiles",
+      "Class 4 hail rated",
+      "Up to a 50-year warranty",
+      "Lightweight — most homes don't need structural retrofit",
+    ],
+  },
+  {
+    title: "Metal Shake & Specialty Panels",
+    image: "/images/red-metal-home.webp",
+    alt: "Red metal roof on a residential home outside Fort Worth, TX",
+    body: "We also install metal shake profiles and specialty panels for accent roofs, wall cladding, porch covers, and outbuildings across Fort Worth, Azle, and Weatherford. If you've seen a profile online and want it, we'll quote it.",
+    specs: [
+      "Metal shake (cedar look)",
+      "Specialty profiles & wall cladding",
+      "Custom colors",
+      "Energy Star rated options",
+    ],
+  },
+];
+
+const benefits = [
+  {
+    icon: Wind,
+    title: "Built for Texas storms",
+    body: "145 mph wind rating and Class 4 hail rating — the toughest impact spec a roof can carry in North Texas.",
+  },
+  {
+    icon: Sun,
+    title: "Cooler attics, lower bills",
+    body: "Reflective Energy Star metal coatings cut Fort Worth attic temps in July and shave summer cooling costs.",
+  },
+  {
+    icon: DollarSign,
+    title: "Homeowners insurance discount",
+    body: "Most Fort Worth carriers offer a premium discount for Class 4 impact-rated metal — it can pay back fast.",
+  },
+  {
+    icon: Award,
+    title: "40–60 year lifespan",
+    body: "A properly installed metal roof outlasts two or three shingle roofs. One install, decades of peace.",
+  },
+  {
+    icon: Palette,
+    title: "Wide range of designer colors",
+    body: "Kynar finishes in dozens of fade-resistant colors. Match your siding, brick, or HOA palette in Fort Worth.",
+  },
+  {
+    icon: EyeOff,
+    title: "Zero exposed fasteners",
+    body: "Standing seam hides every screw. Nothing on the surface to rust, leak, or work loose in a Fort Worth hailstorm.",
+  },
+  {
+    icon: Shield,
+    title: "Highest fire rating",
+    body: "Class A fire rating — the top spec available, important in dry North Texas conditions.",
+  },
+  {
+    icon: VolumeX,
+    title: "Quieter than you'd think",
+    body: "Modern metal over a proper decking and underlayment is no louder than shingle. The 'rain on a tin barn' myth is just that — a myth.",
+  },
+  {
+    icon: CheckCircle2,
+    title: "Virtually maintenance-free",
+    body: "No granule loss, no curling, no nail pops. A quick annual gutter clean and a Fort Worth metal roof keeps doing its job.",
+  },
+];
+
+const processSteps = [
+  {
+    n: "01",
+    icon: Search,
+    title: "Free On-Site Inspection",
+    body: "We come out to your Fort Worth, TX home, walk the roof, take photos, and measure for a metal install. No charge, no pressure.",
+  },
+  {
+    n: "02",
+    icon: ClipboardCheck,
+    title: "Detailed Written Estimate",
+    body: "Line-item bid — panel profile, gauge, color, underlayment, flashing, trim, gutter tie-ins. You see exactly where every dollar goes.",
+  },
+  {
+    n: "03",
+    icon: Hammer,
+    title: "On-Site Fabrication & Install",
+    body: "Standing seam panels are roll-formed at our Fort Worth shop and installed by our in-house crew. Most metal roofs wrap in 3–5 days.",
+  },
+  {
+    n: "04",
+    icon: HardHat,
+    title: "Final Walkthrough + Warranty",
+    body: "Owner-led walkthrough, full cleanup with magnetic sweep, and your warranty paperwork in writing.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How much does a metal roof cost in Fort Worth, TX?",
+    a: "Most Fort Worth-area metal roofs run roughly 1.5×–2.5× the cost of a comparable architectural shingle roof, depending on profile, gauge, color, and roof complexity. Stone-coated steel and standing seam are typically the most expensive options; exposed-fastener panels are the most affordable. The trade-off is lifespan: a single metal install commonly outlasts two or three shingle roofs, plus most insurance carriers offer a Class 4 premium discount.",
+  },
+  {
+    q: "How long does a metal roof last in North Texas?",
+    a: "A correctly installed standing seam roof on a Fort Worth home typically lasts 40 to 60 years. Stone-coated steel warranties run up to 50 years. Compare that to 20–25 years for a quality architectural shingle and the math works out in metal's favor for most long-term homeowners.",
+  },
+  {
+    q: "Is a metal roof noisy in a Texas thunderstorm?",
+    a: "No — that's a myth from the era of metal panels nailed directly to barn rafters. A modern Fort Worth metal install sits on solid decking with underlayment and (often) an attic full of insulation between the roof and the living space. The noise level inside is very close to a shingle roof.",
+  },
+  {
+    q: "Will a metal roof lower my homeowners insurance in Fort Worth?",
+    a: "Usually yes. Class 4 impact-rated metal qualifies for a hail-resistant discount with most North Texas insurance carriers. Ask your agent for the carrier's exact discount — we can supply the manufacturer documentation needed.",
+  },
+  {
+    q: "Can I install metal over my existing shingles?",
+    a: "In some Fort Worth-area cases, yes — but we typically recommend a full tear-off so we can inspect the decking, replace any rotted plywood, and install a fresh synthetic underlayment. It's a more honest install and usually doesn't add much to the cost in the context of a metal-roof investment.",
+  },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services/metal-roofing" },
+  { name: "Metal Roofing", href: "/services/metal-roofing" },
+]);
+
+const serviceSchema = generateServiceSchema({
+  name: "Metal Roofing in Fort Worth, TX",
+  description,
+  serviceType: "Metal Roofing",
+  url: "/services/metal-roofing",
+  image: "/images/metal-country-home.webp",
+});
+
+const faqSchema = generateFAQSchema(
+  faqs.map((f, i) => ({ id: `metal-${i}`, question: f.q, answer: f.a }))
+);
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="Metal Roofing in Fort Worth, TX | JC Roofing"
+  preloadImage="/images/metal-country-home.webp"
+>
+  <PageHero
+    eyebrow="Metal Roofing"
+    heading="Metal Roofing in Fort Worth, TX — Built for Texas Storms"
+    subtitle="Standing seam, stone-coated steel, and custom metal panels — fabricated on-site, installed by our own Fort Worth crew. Class 4 hail rated, 145 mph wind rated, and ready for whatever North Texas throws."
+    image="/images/metal-country-home.webp"
+    imageAlt="Black standing seam metal roof on a country home outside Fort Worth, TX at sunset"
+    ctaLabel="Get a Free Metal Roof Quote"
+  />
+
+  {/* ============ INTRO ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-5 lg:gap-16">
+        <div class="lg:col-span-3">
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Why Metal in North Texas
+          </span>
+          <h2
+            class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+          >
+            The Toughest Roof You Can Put on a Fort Worth Home
+          </h2>
+          <div class="mt-6 space-y-5 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              Fort Worth, TX is hail country. Spring and fall storms regularly
+              push hailstones the size of golf balls (or worse) across
+              Tarrant, Parker, and Wise Counties. Most asphalt shingle roofs
+              in the area get replaced every 12–20 years because of hail — not
+              because they wore out. A properly specified metal roof in Fort
+              Worth ends that cycle.
+            </p>
+            <p>
+              We've been installing metal roofing in Fort Worth, Azle,
+              Weatherford, and the surrounding counties for decades. Standing
+              seam, stone-coated steel, exposed-fastener panels — we know
+              which profile fits which house, what gauges hold up to which
+              storm profile, and how to flash a Fort Worth chimney so it
+              doesn't leak ten years from now.
+            </p>
+            <p>
+              And because we fabricate standing seam on-site at our Fort
+              Worth, TX shop, we cut the middleman out of the supply chain.
+              That's how a custom metal install can land closer to a premium
+              shingle than you'd expect.
+            </p>
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <img
+            src="/images/metal-home-modern.webp"
+            alt="Modern Fort Worth, TX home with custom standing seam metal roof installed by JC Roofing"
+            width="800"
+            height="1000"
+            class="h-full w-full rounded-2xl border border-border object-cover shadow-2xl"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ PANEL OPTIONS ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Panel Options
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Standing Seam & Specialty Metal Panels in Fort Worth
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Every panel we install on Fort Worth, TX roofs ties back to the same
+          baseline: 24 & 26 gauge steel, Class 4 hail rated, 145 mph wind
+          rated, zero exposed fasteners on standing seam profiles.
+        </p>
+      </div>
+
+      <div class="mt-14 space-y-12">
+        {
+          panelOptions.map((p, i) => (
+            <div
+              class={`grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12 ${
+                i % 2 === 1 ? "lg:[direction:rtl]" : ""
+              }`}
+            >
+              <div class={i % 2 === 1 ? "lg:[direction:ltr]" : ""}>
+                <img
+                  src={p.image}
+                  alt={p.alt}
+                  width="1200"
+                  height="800"
+                  class="aspect-[4/3] w-full rounded-2xl border border-border object-cover shadow-xl"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class={i % 2 === 1 ? "lg:[direction:ltr]" : ""}>
+                <h3 class="text-2xl font-bold text-white md:text-3xl">
+                  {p.title}
+                </h3>
+                <p class="mt-4 text-base leading-relaxed text-foreground-light md:text-lg">
+                  {p.body}
+                </p>
+                <ul class="mt-5 space-y-2.5">
+                  {p.specs.map((spec) => (
+                    <li class="flex items-start gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+                      <span class="text-foreground-light">{spec}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="/contact"
+                  class="mt-6 inline-flex items-center gap-2 font-semibold text-primary-300 underline-offset-4 hover:underline"
+                >
+                  Get a quote on this panel
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ BENEFITS ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Benefits
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Benefits of a Metal Roof for Fort Worth Homeowners
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          benefits.map((b) => (
+            <div class="rounded-2xl border border-border bg-surface p-6">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300">
+                <b.icon className="h-5 w-5" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-white">{b.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                {b.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ PROCESS ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Our Process
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          How We Install a Metal Roof in Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {
+          processSteps.map((s) => (
+            <div class="relative rounded-2xl border border-border bg-background/60 p-6 backdrop-blur-sm">
+              <div class="text-3xl font-extrabold text-primary-300/70">
+                {s.n}
+              </div>
+              <div class="mt-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20 text-primary-300">
+                <s.icon className="h-5 w-5" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-white">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                {s.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ GALLERY ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Recent Work
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Metal Roof Installations Across Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        <img
+          src="/images/aerial-residential-metal.webp"
+          alt="Aerial view of a residential metal roof installation in Fort Worth, TX"
+          width="800"
+          height="600"
+          class="aspect-[4/3] w-full rounded-2xl border border-border object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src="/images/aerial-commercial-metal.webp"
+          alt="Aerial view of a commercial metal roof in Fort Worth, TX installed by JC Roofing"
+          width="800"
+          height="600"
+          class="aspect-[4/3] w-full rounded-2xl border border-border object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          src="/images/country-inn-metal.webp"
+          alt="Country home with standing seam metal roof outside Fort Worth, TX"
+          width="800"
+          height="600"
+          class="aspect-[4/3] w-full rounded-2xl border border-border object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ MID-PAGE CTA BANNER ============ */}
+  <section class="relative overflow-hidden bg-primary-700">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600"
+    >
+    </div>
+    <Container class="relative">
+      <div
+        class="flex flex-col items-center justify-between gap-6 py-12 text-center md:flex-row md:py-14 md:text-left"
+      >
+        <div>
+          <h2 class="text-balance text-2xl font-bold text-white md:text-3xl">
+            Get a Free Metal Roof Estimate in Fort Worth, TX
+          </h2>
+          <p class="mt-2 text-base text-primary-50">
+            We'll come out, walk your roof, and put a real number in writing.
+            Usually within 24 hours.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-base font-bold text-primary-700 transition-all hover:-translate-y-0.5 hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/40 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/20"
+          >
+            Request a Quote
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          FAQ
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Metal Roofing FAQs — Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-surface backdrop-blur-sm"
+        >
+          {
+            faqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <ContactSection
+    heading="Get Your Fort Worth Metal Roof Quote"
+    subtitle="Tell us about your home and roof. We'll get back to you within one business day to schedule a free on-site inspection."
+  />
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
+</Layout>

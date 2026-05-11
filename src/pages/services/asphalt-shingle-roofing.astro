@@ -1,0 +1,427 @@
+---
+import {
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  ChevronDown,
+  Award,
+  Shield,
+  Users,
+  ClipboardCheck,
+  Palette,
+  Wind,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { businessConfig } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
+
+const title = `Asphalt Shingle Roofing in Fort Worth, TX — GAF, Owens Corning, TAMKO | JC Roofing`;
+const description = `Architectural and designer asphalt shingle roofing in Fort Worth, TX. Class 4 impact-rated shingles, GAF / Owens Corning / TAMKO installs, manufacturer Limited Lifetime warranties. Call ${businessConfig.phone}.`;
+
+const lines = [
+  {
+    title: "Standard Architectural Shingles for Fort Worth Homes",
+    image: "/images/asphalt-aerial-home.webp",
+    alt: "Aerial view of an architectural asphalt shingle roof on a Fort Worth, TX home",
+    body: "The bread-and-butter of Fort Worth roofs. Three-tab is mostly gone now — what most Fort Worth, TX homeowners install today is an architectural (dimensional) shingle with a manufacturer Limited Lifetime warranty and the highest fire rating asphalt can carry.",
+    points: [
+      "30-year through Limited Lifetime warranty",
+      "Class A fire rating (highest)",
+      "Dozens of color options to match Fort Worth-area HOAs",
+      "Backed by our workmanship warranty in writing",
+    ],
+  },
+  {
+    title: "Designer & Class 4 Impact-Rated Shingles",
+    image: "/images/slate-shingle-home.webp",
+    alt: "Designer slate-look asphalt shingles on a Fort Worth, TX home",
+    body: "If you want the look of slate or wood shake without the price or maintenance, designer shingles are the move. The premium tier also unlocks Class 4 impact-rated lines — which qualify for hail-resistance discounts from most North Texas insurance carriers.",
+    points: [
+      "Slate, shake, and luxury aesthetic profiles",
+      "Class 4 hail rating (insurance discount eligible)",
+      "Thicker, longer warranties than standard architectural",
+      "Popular in Fort Worth, Aledo, and Weatherford luxury builds",
+    ],
+  },
+];
+
+const brands = [
+  {
+    name: "GAF Shingles in Fort Worth, TX",
+    body: "GAF is the largest shingle manufacturer in North America, and the Timberline HDZ architectural line is one of the most-installed shingles on Fort Worth roofs. We also install the Class 4 impact-rated Timberline AS II for hail-prone areas.",
+  },
+  {
+    name: "Owens Corning Shingles in Fort Worth, TX",
+    body: "Owens Corning Duration shingles are a go-to in our area — particularly Duration Storm and Duration Flex for hail-rated installs. Wide color range and clean granule retention for the Texas sun.",
+  },
+  {
+    name: "TAMKO Shingles in Fort Worth, TX",
+    body: "TAMKO's Heritage line gives Fort Worth homeowners strong color matching and a solid mid-market option for HOA palettes that the GAF/Owens Corning lines can't quite hit.",
+  },
+];
+
+const reasons = [
+  {
+    icon: Users,
+    title: "Owner-led installs",
+    body: "Same owner who quoted the job is on your Fort Worth roof for the install and final walkthrough.",
+  },
+  {
+    icon: Award,
+    title: "3 generations of shingle experience",
+    body: "We've been nailing shingles to North Texas houses since 1936 — through every product change in the industry.",
+  },
+  {
+    icon: Shield,
+    title: "Insurance claim help",
+    body: "Most Fort Worth shingle replacements come out of a hail event. We work with your adjuster directly and document the storm damage properly.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Written warranty",
+    body: "Manufacturer materials warranty plus a separate JC Roofing workmanship warranty — in writing, before we start.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How long do asphalt shingles last on a Fort Worth, TX roof?",
+    a: "In North Texas, a quality architectural shingle realistically gets 18–25 years before normal aging requires replacement. The bigger threat isn't time, it's hail — a single severe hailstorm can total an otherwise healthy Fort Worth shingle roof in fifteen minutes. Class 4 impact-rated lines hold up much better and slow that replacement cycle considerably.",
+  },
+  {
+    q: "What are the signs of hail damage on a Fort Worth shingle roof?",
+    a: "From the ground you'll often see granule loss in gutters and around downspouts. On the roof, hail strikes look like dark bruises where the asphalt mat is exposed, sometimes with the granules knocked off in a circular pattern. We do free post-storm inspections across Fort Worth, Azle, Weatherford, and the surrounding counties — and we document everything for your insurance claim.",
+  },
+  {
+    q: "GAF vs Owens Corning vs TAMKO — which shingle should I pick?",
+    a: "All three are quality manufacturers and we install all three. GAF Timberline HDZ has the widest color selection and is the most common Fort Worth install. Owens Corning Duration tends to have the best granule retention in our experience. TAMKO Heritage often nails color matching for older Fort Worth neighborhoods. We'll recommend based on your home, your HOA, and your budget — not which one we get the best rebate on.",
+  },
+  {
+    q: "What's the difference between manufacturer warranty and workmanship warranty?",
+    a: "The manufacturer warranty (e.g., GAF Limited Lifetime) covers defects in the shingles themselves. The workmanship warranty covers our install — flashing, fasteners, ventilation, underlayment. Both matter. A failed Fort Worth shingle roof is more often a workmanship issue than a product defect, which is why we put the workmanship warranty in writing.",
+  },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services/metal-roofing" },
+  { name: "Asphalt Shingle Roofing", href: "/services/asphalt-shingle-roofing" },
+]);
+
+const serviceSchema = generateServiceSchema({
+  name: "Asphalt Shingle Roofing in Fort Worth, TX",
+  description,
+  serviceType: "Asphalt Shingle Roofing",
+  url: "/services/asphalt-shingle-roofing",
+  image: "/images/aerial-shingle-estate.webp",
+});
+
+const faqSchema = generateFAQSchema(
+  faqs.map((f, i) => ({ id: `shingle-${i}`, question: f.q, answer: f.a }))
+);
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="Asphalt Shingle Roofing in Fort Worth, TX | JC Roofing"
+  preloadImage="/images/aerial-shingle-estate.webp"
+>
+  <PageHero
+    eyebrow="Asphalt Shingle Roofing"
+    heading="Asphalt Shingle Roofing in Fort Worth, TX"
+    subtitle="Architectural and Class 4 impact-rated shingles installed across Fort Worth, Azle, Weatherford, and the surrounding counties. GAF, Owens Corning, and TAMKO — with our workmanship warranty in writing."
+    image="/images/aerial-shingle-estate.webp"
+    imageAlt="Aerial view of a large Fort Worth, TX estate with an architectural asphalt shingle roof"
+    ctaLabel="Get a Free Shingle Roof Quote"
+  />
+
+  {/* ============ INTRO ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-4xl">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          North Texas Shingle Specialists
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+        >
+          The Most-Installed Roof in Fort Worth, TX — Done Right
+        </h2>
+        <div class="mt-6 space-y-5 text-base leading-relaxed text-foreground-light md:text-lg">
+          <p>
+            Asphalt shingle is by far the most common roof we install on Fort
+            Worth, TX homes — and for good reason. Modern architectural
+            shingles come with manufacturer Limited Lifetime warranties, dozens
+            of color options to fit any HOA, and Class A fire ratings. Class 4
+            impact-rated lines stand up to North Texas hail far better than
+            their reputation suggests.
+          </p>
+          <p>
+            We've been nailing shingles to Fort Worth roofs through three
+            generations of the family. We've watched the products evolve from
+            three-tab to dimensional to luxury designer profiles. We know
+            which brands hold up to West Texas heat, which colors fade fastest
+            in direct Tarrant County sun, and where Fort Worth installers
+            commonly cut corners (looking at you, valleys and pipe boots).
+          </p>
+          <p>
+            Every JC shingle install in Fort Worth comes with a manufacturer
+            materials warranty plus our own workmanship warranty, in writing,
+            handed to you on the final walkthrough.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SHINGLE LINES ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Shingle Lines
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Standard & Designer Shingles for Fort Worth Homes
+        </h2>
+      </div>
+
+      <div class="mt-14 space-y-12">
+        {
+          lines.map((line, i) => (
+            <div class={`grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-12 ${i % 2 === 1 ? "lg:[direction:rtl]" : ""}`}>
+              <div class={i % 2 === 1 ? "lg:[direction:ltr]" : ""}>
+                <img
+                  src={line.image}
+                  alt={line.alt}
+                  width="1200"
+                  height="800"
+                  class="aspect-[4/3] w-full rounded-2xl border border-border object-cover shadow-xl"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class={i % 2 === 1 ? "lg:[direction:ltr]" : ""}>
+                <h3 class="text-2xl font-bold text-white md:text-3xl">
+                  {line.title}
+                </h3>
+                <p class="mt-4 text-base leading-relaxed text-foreground-light md:text-lg">
+                  {line.body}
+                </p>
+                <ul class="mt-5 space-y-2.5">
+                  {line.points.map((point) => (
+                    <li class="flex items-start gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+                      <span class="text-foreground-light">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="/contact"
+                  class="mt-6 inline-flex items-center gap-2 font-semibold text-primary-300 underline-offset-4 hover:underline"
+                >
+                  Quote this shingle line
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ BRAND PARTNERS ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Brand Partners
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          GAF, Owens Corning & TAMKO Shingles Installed in Fort Worth, TX
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          We install across all three major manufacturer ecosystems so we can
+          fit the right product to your Fort Worth home — not just the brand
+          we happen to stock.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          brands.map((b) => (
+            <div class="rounded-2xl border border-border bg-surface p-6 md:p-7">
+              <h3 class="text-xl font-bold text-white">{b.name}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-foreground-light md:text-base">
+                {b.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ WHY JC ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Why JC for Shingles
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Why Fort Worth Homeowners Choose JC for Shingle Roofs
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {
+          reasons.map((r) => (
+            <div class="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur-sm">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300">
+                <r.icon className="h-5 w-5" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-white">{r.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                {r.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ CURB APPEAL ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <img
+          src="/images/shingle-stone-home.webp"
+          alt="Stone-front Fort Worth, TX home with new architectural asphalt shingle roof"
+          width="1200"
+          height="800"
+          class="aspect-[4/3] w-full rounded-2xl border border-border object-cover shadow-xl"
+          loading="lazy"
+          decoding="async"
+        />
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Curb Appeal
+          </span>
+          <h2 class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
+            Color Matching for Fort Worth Brick, Stone & HOA Palettes
+          </h2>
+          <div class="mt-5 space-y-4 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              A shingle roof can either elevate the whole Fort Worth elevation
+              or quietly fight your brick and trim color. We bring full sample
+              boards on the inspection so you're matching the actual product
+              to the actual house — not guessing from a chip on a phone.
+            </p>
+            <p>
+              If your Fort Worth-area HOA dictates color palettes, we'll walk
+              you through which manufacturer carries the closest match. Three
+              manufacturer ecosystems gives us a lot more flexibility than a
+              one-brand contractor.
+            </p>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+            >
+              Bring Samples to My House
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="border-t border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          FAQ
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Asphalt Shingle FAQs — Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-background/60 backdrop-blur-sm"
+        >
+          {
+            faqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <ContactSection
+    heading="Get Your Fort Worth Shingle Roof Quote"
+    subtitle="Tell us about your home and what you're seeing on the roof. Most Fort Worth-area inspections get scheduled within 24 hours."
+  />
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
+</Layout>

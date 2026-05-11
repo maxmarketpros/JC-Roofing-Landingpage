@@ -1,5 +1,5 @@
 ---
-import { Phone, Menu, X } from "lucide-react";
+import { Phone, Menu, X, ChevronDown } from "lucide-react";
 import Container from "@/components/ui/Container.astro";
 import { siteConfig } from "@/config/site";
 import { businessConfig } from "@/config/business";
@@ -20,7 +20,7 @@ import { mainNav } from "@/config/navigation";
     <nav class="flex h-20 items-center justify-between">
       {/* Logo */}
       <a
-        href="#top"
+        href="/"
         class="flex items-center gap-3"
         aria-label={`${siteConfig.name} home`}
       >
@@ -39,14 +39,39 @@ import { mainNav } from "@/config/navigation";
       {/* Desktop Navigation */}
       <div class="hidden items-center gap-1 lg:flex">
         {
-          mainNav.map((item) => (
-            <a
-              href={item.href}
-              class="rounded-md px-3 py-2 text-sm font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
-            >
-              {item.label}
-            </a>
-          ))
+          mainNav.map((item) =>
+            item.children && item.children.length > 0 ? (
+              <div class="group relative">
+                <a
+                  href={item.href}
+                  class="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+                </a>
+                <div class="invisible absolute left-0 top-full z-50 w-64 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div class="overflow-hidden rounded-xl border border-border bg-[rgba(10,13,12,0.96)] shadow-xl backdrop-blur-md">
+                    {item.children.map((child) => (
+                      <a
+                        href={child.href}
+                        class="block px-4 py-3 text-sm font-medium text-foreground-light transition-colors hover:bg-primary-600/20 hover:text-white"
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                href={item.href}
+                class="rounded-md px-3 py-2 text-sm font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+              >
+                {item.label}
+              </a>
+            )
+          )
         }
       </div>
 
@@ -60,7 +85,7 @@ import { mainNav } from "@/config/navigation";
           {businessConfig.phone}
         </a>
         <a
-          href="#contact"
+          href="/contact"
           class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-md"
         >
           Free Quote
@@ -87,15 +112,32 @@ import { mainNav } from "@/config/navigation";
     >
       <div class="flex flex-col gap-1">
         {
-          mainNav.map((item) => (
-            <a
-              href={item.href}
-              class="block rounded-md px-3 py-3 text-base font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
-              data-mobile-link
-            >
-              {item.label}
-            </a>
-          ))
+          mainNav.map((item) =>
+            item.children && item.children.length > 0 ? (
+              <div class="mt-1">
+                <span class="block px-3 py-2 text-xs font-bold uppercase tracking-wider text-muted">
+                  {item.label}
+                </span>
+                {item.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="block rounded-md px-3 py-2.5 text-base font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+                    data-mobile-link
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <a
+                href={item.href}
+                class="block rounded-md px-3 py-3 text-base font-medium text-foreground-light transition-colors hover:bg-white/5 hover:text-white"
+                data-mobile-link
+              >
+                {item.label}
+              </a>
+            )
+          )
         }
         <a
           href={`tel:${businessConfig.phoneRaw}`}
@@ -105,7 +147,7 @@ import { mainNav } from "@/config/navigation";
           Call {businessConfig.phone}
         </a>
         <a
-          href="#contact"
+          href="/contact"
           class="mt-2 inline-flex items-center justify-center rounded-lg bg-primary-600 px-5 py-3 text-base font-semibold text-white"
           data-mobile-link
         >

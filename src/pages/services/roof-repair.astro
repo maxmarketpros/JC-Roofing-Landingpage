@@ -1,0 +1,436 @@
+---
+import {
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  ChevronDown,
+  Wrench,
+  Droplet,
+  CloudLightning,
+  Hammer,
+  Wind,
+  Shield,
+  AlertTriangle,
+  Clock,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { businessConfig } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
+
+const title = `Roof Repair in Fort Worth, TX — Leak Fix & Storm Damage | JC Roofing`;
+const description = `Fast, same-day roof repair in Fort Worth, TX. Leak fix, storm damage repair, hail damage, missing shingles, flashing, vent boots — owner-led 3rd-generation crew, 24/7 emergency response. Call ${businessConfig.phone}.`;
+
+const commonRepairs = [
+  {
+    icon: Droplet,
+    title: "Leak Repair",
+    body: "Mystery leaks, ceiling stains, recurring drips — we find the actual source (usually nowhere near the visible stain) and fix it once.",
+  },
+  {
+    icon: CloudLightning,
+    title: "Hail Damage Repair",
+    body: "Class 1–4 hail strikes documented and repaired. Most Fort Worth-area hail repairs go through homeowner's insurance.",
+  },
+  {
+    icon: Wind,
+    title: "Missing or Lifted Shingles",
+    body: "Common after high-wind events in Tarrant and Parker Counties. Color matching from our shingle stock so the repair blends.",
+  },
+  {
+    icon: Shield,
+    title: "Flashing Repair",
+    body: "Chimney, wall, valley, and skylight flashing — the #1 source of Fort Worth roof leaks, and the #1 thing other roofers cut corners on.",
+  },
+  {
+    icon: Wrench,
+    title: "Vent Boots & Pipe Jacks",
+    body: "Cracked rubber boots around plumbing vents are a leading cause of slow leaks. Replaced with lead or premium rubber boots that actually last in Texas sun.",
+  },
+  {
+    icon: Hammer,
+    title: "Gutter & Edge Repairs",
+    body: "Sagging gutters, missing drip edge, fascia damage — the roof-line details that cause water to back up under shingles.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How fast can you get out for a roof leak in Fort Worth, TX?",
+    a: "Most Fort Worth, TX leak calls get a same-day or next-business-day visit. We run 24/7 emergency response for active leaks — if water is currently coming into your home, call (817) 318-7663 and we'll tarp or temporary-patch immediately to stop the damage, then schedule the permanent repair.",
+  },
+  {
+    q: "Do you do after-hours and weekend emergency roof repair?",
+    a: "Yes. Active leaks during a Fort Worth storm don't wait for Monday morning. Our 24/7 emergency line handles tarp-and-stabilize calls so you can stop water damage tonight, with the proper repair scheduled for the next business day.",
+  },
+  {
+    q: "Will my insurance cover a Fort Worth roof repair?",
+    a: "If the damage is from a covered storm event (hail, wind, fallen tree), usually yes — subject to your deductible. We document the damage with date-stamped photos and written reports formatted for Fort Worth-area insurance adjusters. If the repair is from normal wear or age, that's an out-of-pocket repair.",
+  },
+  {
+    q: "What's the warranty on a repair?",
+    a: "Our workmanship warranty on Fort Worth roof repairs is in writing. The duration depends on the repair scope — a full flashing rebuild carries a longer warranty than a single shingle replacement — and we tell you the exact term before any work starts. If the repair fails for any reason within the warranty period, we come back and fix it on our dime.",
+  },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services/metal-roofing" },
+  { name: "Roof Repair", href: "/services/roof-repair" },
+]);
+
+const serviceSchema = generateServiceSchema({
+  name: "Roof Repair in Fort Worth, TX",
+  description,
+  serviceType: "Roof Repair",
+  url: "/services/roof-repair",
+  image: "/images/metal-detail.webp",
+});
+
+const faqSchema = generateFAQSchema(
+  faqs.map((f, i) => ({ id: `repair-${i}`, question: f.q, answer: f.a }))
+);
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="Roof Repair in Fort Worth, TX | JC Roofing"
+  preloadImage="/images/metal-detail.webp"
+>
+  <PageHero
+    eyebrow="Roof Repair · 24/7 Emergency"
+    heading="Roof Repair in Fort Worth, TX — Fast Leak & Storm Damage Fixes"
+    subtitle="Same-day and next-day roof repair across Fort Worth, Azle, Weatherford, and the surrounding counties. Active leak? Call us 24/7 — we'll tarp, stabilize, then fix it right."
+    image="/images/metal-detail.webp"
+    imageAlt="Close-up of a roof repair on a standing seam metal roof in Fort Worth, TX"
+    ctaLabel="Request Emergency Repair"
+  />
+
+  {/* ============ INTRO ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-4xl">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Fast, Honest, Permanent Repairs
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+        >
+          Roof Repair in Fort Worth, TX — Done Once, Done Right
+        </h2>
+        <div class="mt-6 space-y-5 text-base leading-relaxed text-foreground-light md:text-lg">
+          <p>
+            Most roofers don't really want repair work — there's more margin
+            in replacements. JC Roofing isn't most roofers. We've been
+            patching, flashing, sealing, and rebuilding the tricky spots on
+            Fort Worth, TX roofs for three generations. If a repair will
+            buy your roof three more good years, that's what we'll quote.
+          </p>
+          <p>
+            We cover Fort Worth, Azle, Springtown, Weatherford, Cresson,
+            Godley, Joshua — anywhere across Tarrant, Parker, Palo Pinto,
+            Johnson, and Wise Counties. Most repair calls get a same-day or
+            next-business-day inspection, and our 24/7 emergency line
+            handles active leaks any hour.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ COMMON REPAIRS ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Common Repairs
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Common Roof Repairs We Do in Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          commonRepairs.map((r) => (
+            <div class="rounded-2xl border border-border bg-background/60 p-6 backdrop-blur-sm">
+              <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300">
+                <r.icon className="h-5 w-5" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-white">{r.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-foreground-light">
+                {r.body}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ STORM DAMAGE ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <img
+          src="/images/multifamily-metal.webp"
+          alt="Multifamily roof in Fort Worth-area Tarrant County after a hailstorm — assessed for storm damage repair"
+          width="1200"
+          height="900"
+          class="aspect-[4/3] w-full rounded-2xl border border-border object-cover shadow-xl"
+          loading="lazy"
+          decoding="async"
+        />
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Storm & Hail Damage
+          </span>
+          <h2 class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
+            Storm & Hail Damage Roof Repair in Tarrant County
+          </h2>
+          <div class="mt-5 space-y-4 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              Fort Worth, TX sits in the heart of hail country. Spring and
+              fall storms regularly punish roofs across Tarrant, Parker, and
+              Wise Counties. After a major storm event we'll get to your
+              house, document the damage, and tell you straight whether
+              you're looking at a targeted repair or an insurance-funded
+              replacement.
+            </p>
+            <p>
+              We provide date-stamped roof photos and written hail-strike
+              reports formatted for North Texas insurance carriers — and we'll
+              meet your adjuster on the roof so nothing legitimate gets
+              missed. We don't do "we'll cover your deductible" gimmicks
+              (those are illegal in Texas).
+            </p>
+          </div>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-500"
+            >
+              Schedule Storm Damage Inspection
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ REPAIR VS REPLACE ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Repair vs Replace
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          When to Repair vs Replace Your Fort Worth Roof
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        <div class="rounded-2xl border border-border bg-background/60 p-6 md:p-8">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <Wrench className="h-5 w-5" />
+            </div>
+            <h3 class="text-xl font-bold text-white">Lean toward repair</h3>
+          </div>
+          <ul class="mt-5 space-y-2.5">
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Damage is localized to one or two spots on the Fort Worth roof
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Roof is under 12 years old and otherwise in good shape
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Cause is a single failed component (boot, flashing, lifted
+                shingle) rather than systemic age
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Insurance claim isn't on the table or didn't pencil out
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-border bg-background/60 p-6 md:p-8">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <h3 class="text-xl font-bold text-white">Lean toward replacement</h3>
+          </div>
+          <ul class="mt-5 space-y-2.5">
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Damage is spread across multiple slopes
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Roof is 18+ years old in Fort Worth's climate
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Granules are washing out of gutters; bald spots on shingles
+              </span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary-300" />
+              <span class="text-foreground-light">
+                Storm damage is significant enough to total the insurance
+                claim
+              </span>
+            </li>
+          </ul>
+          <a
+            href="/services/roof-replacement"
+            class="mt-6 inline-flex items-center gap-2 font-semibold text-primary-300 underline-offset-4 hover:underline"
+          >
+            See roof replacement
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ EMERGENCY BANNER ============ */}
+  <section class="relative overflow-hidden bg-primary-700">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600"
+    >
+    </div>
+    <Container class="relative">
+      <div
+        class="flex flex-col items-center justify-between gap-6 py-12 text-center md:flex-row md:py-14 md:text-left"
+      >
+        <div>
+          <div class="flex items-center justify-center gap-2 text-primary-100 md:justify-start">
+            <Clock className="h-5 w-5" />
+            <span class="text-sm font-bold uppercase tracking-wider">
+              24/7 Emergency Response
+            </span>
+          </div>
+          <h2 class="mt-2 text-balance text-2xl font-bold text-white md:text-3xl">
+            Active Leak? 24/7 Emergency Roof Repair in Fort Worth, TX
+          </h2>
+          <p class="mt-2 text-base text-primary-50">
+            Water in the house right now? Call. We'll tarp, stabilize, then
+            schedule the permanent fix.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-base font-bold text-primary-700 transition-all hover:-translate-y-0.5 hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FAQ ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          FAQ
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Roof Repair FAQs — Fort Worth, TX
+        </h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-surface backdrop-blur-sm"
+        >
+          {
+            faqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <ContactSection
+    heading="Request a Fort Worth Roof Repair"
+    subtitle="Describe what you're seeing — drips, missing shingles, post-storm damage. Active leaks get same-day calls back."
+  />
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
+</Layout>

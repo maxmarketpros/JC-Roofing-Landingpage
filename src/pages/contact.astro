@@ -1,0 +1,412 @@
+---
+import {
+  MapPin,
+  Clock,
+  Phone,
+  CheckCircle2,
+  ChevronDown,
+  ArrowRight,
+} from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ContactSection from "@/components/sections/ContactSection.astro";
+import { siteConfig } from "@/config/site";
+import { businessConfig } from "@/config/business";
+import { getMapEmbedUrl } from "@/config/business";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
+
+const title = `Contact JC Roofing — Free Roof Quote in Fort Worth, TX`;
+const description = `Reach JC Roofing in Fort Worth, TX. Call ${businessConfig.phone}, email ${businessConfig.email}, or request a free roof inspection online. Mon–Sat 8 AM – 5 PM, with 24/7 emergency response across Tarrant, Parker, Palo Pinto, Johnson & Wise Counties.`;
+
+const quickFaqs = [
+  {
+    q: "How fast will you respond after I send this form?",
+    a: "Most Fort Worth, TX form submissions get a call back within one business day. Active leak calls (especially in storm season) get same-day priority — call (817) 318-7663 directly if you have water coming in.",
+  },
+  {
+    q: "Is the quote really free?",
+    a: "Yes. The on-site inspection and written estimate are free for any Fort Worth-area homeowner. No deposits, no hidden assessment fees. If you decide not to move forward, you owe nothing.",
+  },
+  {
+    q: "Do you serve my city outside Fort Worth?",
+    a: "We cover Fort Worth, Azle, Springtown, Weatherford, Cresson, Godley, and Joshua — and most of Tarrant, Parker, Palo Pinto, Johnson, and Wise Counties. Just outside that area? Send the form anyway and we'll let you know honestly whether we're a fit.",
+  },
+];
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Contact", href: "/contact" },
+]);
+
+const contactPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  url: `${siteConfig.url}/contact`,
+  name: title,
+  description,
+  isPartOf: { "@id": `${siteConfig.url}/#website` },
+  about: { "@id": `${siteConfig.url}/#business` },
+};
+
+const faqSchema = generateFAQSchema(
+  quickFaqs.map((f, i) => ({ id: `contact-${i}`, question: f.q, answer: f.a }))
+);
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogTitle="Contact JC Roofing — Fort Worth, TX"
+  preloadImage="/images/hero-home.webp"
+>
+  <PageHero
+    eyebrow="Contact JC Roofing"
+    heading="Contact JC Roofing — Free Estimates in Fort Worth, TX"
+    subtitle="Call, email, or send the form. Most Fort Worth-area inspections get scheduled within 24 hours. 24/7 emergency response for active leaks."
+    image="/images/hero-home.webp"
+    imageAlt="JC Roofing — Fort Worth, TX roofing contractor"
+    ctaLabel="Send a Message"
+    ctaHref="#quote"
+  />
+
+  {/* ============ QUICK CONTACT ROW ============ */}
+  <section class="border-b border-border bg-surface">
+    <Container>
+      <div class="grid gap-6 py-10 md:grid-cols-3">
+        <a
+          href={`tel:${businessConfig.phoneRaw}`}
+          class="group flex items-center gap-4 rounded-2xl border border-border bg-background/60 p-5 transition-all hover:-translate-y-0.5 hover:border-primary-400/50"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+          >
+            <Phone className="h-6 w-6" />
+          </div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wider text-muted">
+              Phone (24/7 emergency)
+            </p>
+            <p class="mt-0.5 text-lg font-bold text-white">
+              {businessConfig.phone}
+            </p>
+          </div>
+        </a>
+        <a
+          href={`mailto:${businessConfig.email}`}
+          class="group flex items-center gap-4 rounded-2xl border border-border bg-background/60 p-5 transition-all hover:-translate-y-0.5 hover:border-primary-400/50"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+          >
+            <MapPin className="h-6 w-6" />
+          </div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wider text-muted">
+              Email
+            </p>
+            <p class="mt-0.5 text-lg font-bold text-white break-all">
+              {businessConfig.email}
+            </p>
+          </div>
+        </a>
+        <div
+          class="flex items-center gap-4 rounded-2xl border border-border bg-background/60 p-5"
+        >
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600/20 text-primary-300"
+          >
+            <Clock className="h-6 w-6" />
+          </div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wider text-muted">
+              Hours
+            </p>
+            <p class="mt-0.5 text-base font-bold text-white">
+              Mon–Sat: 8 AM – 5 PM
+            </p>
+            <p class="text-xs text-foreground-light">24/7 emergency line</p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FORM + CONTACT INFO ============ */}
+  <ContactSection
+    heading="Request a Free Roof Inspection in Fort Worth, TX"
+    subtitle="Drop your info below and we'll be in touch within one business day. Want to talk now? Call (817) 318-7663."
+  />
+
+  {/* ============ HOURS BLOCK ============ */}
+  <section class="border-y border-border bg-surface section-padding">
+    <Container>
+      <div class="grid gap-10 md:grid-cols-2 md:gap-16">
+        <div>
+          <span
+            class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+          >
+            Hours of Operation
+          </span>
+          <h2 class="mt-3 text-balance text-3xl font-bold text-white md:text-4xl">
+            When We Pick Up & When We Don't
+          </h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-foreground-light md:text-lg">
+            <p>
+              We answer the phone Monday through Saturday, 8 AM to 5 PM. Most
+              Fort Worth-area inspections get scheduled within one business
+              day of your call or form submission.
+            </p>
+            <p>
+              Outside those hours, our <strong class="text-white">
+                24/7 emergency line
+              </strong> handles active leaks. If water is coming into your Fort
+              Worth, TX home tonight, call (817) 318-7663 — we'll tarp or
+              temporary-patch and schedule the permanent fix for the next
+              business day.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-border bg-background/60 p-6 md:p-8">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <Clock className="h-5 w-5" />
+            </div>
+            <h3 class="text-xl font-bold text-white">Office Hours</h3>
+          </div>
+          <ul class="mt-5 divide-y divide-border">
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Monday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Tuesday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Wednesday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Thursday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Friday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Saturday</span>
+              <span class="font-semibold text-white">8 AM – 5 PM</span>
+            </li>
+            <li class="flex items-center justify-between py-3">
+              <span class="font-medium text-foreground-light">Sunday</span>
+              <span class="text-sm font-semibold text-primary-300">
+                Emergency only
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ SERVICE AREA + MAP ============ */}
+  <section class="section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Service Area
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Cities & Counties We Serve from Fort Worth, TX
+        </h2>
+        <p class="mt-5 text-lg text-foreground-light">
+          Local crews running out of our Fort Worth office, on roofs across
+          North Texas.
+        </p>
+      </div>
+
+      {/* Counties strip */}
+      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+        {
+          businessConfig.serviceAreaCounties.map((county) => (
+            <span class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-600/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary-100">
+              <MapPin className="h-3.5 w-3.5 text-primary-300" />
+              {county}
+            </span>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
+        {/* Cities + zip codes */}
+        <div
+          class="rounded-2xl border border-border bg-surface p-6 md:p-8 lg:col-span-2"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white"
+            >
+              <MapPin className="h-5 w-5" />
+            </div>
+            <h3 class="text-lg font-bold text-white">Cities & ZIP Codes</h3>
+          </div>
+
+          <ul class="mt-5 space-y-2.5">
+            {
+              businessConfig.serviceAreaCities.map((city) => (
+                <li class="flex items-start gap-3 rounded-lg bg-background/60 px-3.5 py-3">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary-300" />
+                  <div class="flex flex-1 flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span class="text-sm font-semibold text-white">
+                      {city.name}
+                    </span>
+                    <span class="text-[11px] text-muted">{city.county}</span>
+                    <div class="ml-auto flex flex-wrap gap-1">
+                      {city.zips.map((zip) => (
+                        <span class="rounded-md border border-border bg-background/80 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground-light">
+                          {zip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-6 text-sm text-foreground-light">
+            Just outside our area?{" "}
+            <a
+              href="#quote"
+              class="font-semibold text-primary-300 underline-offset-4 hover:underline"
+            >
+              Send the form
+            </a>
+            . We'll let you know if we can help.
+          </p>
+        </div>
+
+        {/* Map */}
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-surface lg:col-span-3"
+        >
+          <iframe
+            src={getMapEmbedUrl()}
+            title="JC Roofing, Fort Worth TX"
+            loading="lazy"
+            class="h-[420px] w-full border-0 lg:h-full lg:min-h-[480px]"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ QUICK FAQ ============ */}
+  <section class="border-t border-border bg-surface section-padding">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="text-xs font-bold uppercase tracking-[0.2em] text-primary-300"
+        >
+          Quick Answers
+        </span>
+        <h2
+          class="mt-3 text-balance text-3xl font-bold text-white md:text-5xl"
+        >
+          Quick Answers Before You Call
+        </h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-3xl">
+        <div
+          class="overflow-hidden rounded-2xl border border-border bg-background/60 backdrop-blur-sm"
+        >
+          {
+            quickFaqs.map(({ q, a }, i) => (
+              <details
+                class="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
+                open={i === 0}
+              >
+                <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-white transition-colors hover:bg-white/[0.02] md:text-lg">
+                  <span>{q}</span>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-primary-300 transition-transform duration-300 group-open:rotate-180" />
+                </summary>
+                <div class="px-6 pb-6 text-sm leading-relaxed text-foreground-light md:text-base">
+                  {a}
+                </div>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* ============ FINAL CTA BANNER ============ */}
+  <section class="relative overflow-hidden bg-primary-700">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600"
+    >
+    </div>
+    <Container class="relative">
+      <div
+        class="flex flex-col items-center justify-between gap-6 py-12 text-center md:flex-row md:py-14 md:text-left"
+      >
+        <div>
+          <h2 class="text-balance text-2xl font-bold text-white md:text-3xl">
+            Ready for your free Fort Worth, TX roof inspection?
+          </h2>
+          <p class="mt-2 text-base text-primary-50">
+            Send the form, give us a call, or both. We'll be on your roof
+            within a few days.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <a
+            href={`tel:${businessConfig.phoneRaw}`}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-base font-bold text-primary-700 transition-all hover:-translate-y-0.5 hover:bg-primary-50"
+          >
+            <Phone className="h-5 w-5" />
+            {businessConfig.phone}
+          </a>
+          <a
+            href="#quote"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/40 bg-white/10 px-6 py-3.5 text-base font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/20"
+          >
+            Use the Form
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* Structured data */}
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(contactPageSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
+</Layout>
