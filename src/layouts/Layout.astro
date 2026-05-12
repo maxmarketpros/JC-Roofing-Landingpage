@@ -207,6 +207,21 @@ const websiteSchema = generateWebsiteSchema();
       set:html={JSON.stringify(websiteSchema)}
     />
 
+    {/* Google tag (gtag.js) */}
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-18149147818"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "AW-18149147818");
+    </script>
+
     <slot name="head" />
   </head>
   <body class="flex min-h-full flex-col">
